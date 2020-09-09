@@ -1,21 +1,85 @@
-# Change Log
+# Changelog
 
-This project follows [Semantic Versioning](CONTRIBUTING.md).
+### v4.0.0 - 2020-03-05
 
-## Proposals
+- BC Break: PHP 7.2 is the minimum required PHP version
+- BC Break: Laravel 7.0 is the minimum supported Laravel version
 
-We do not give estimated times for completion on `Accepted` Proposals.
+### v3.0.4 - 2020-02-07
 
-- [Accepted](https://github.com/cartalyst/sentinel/labels/Accepted)
-- [Rejected](https://github.com/cartalyst/sentinel/labels/Rejected)
+`ADDED`
 
----
+- The `inAnyRole` to be called statically, `Sentinel::inAnyRole($role)`
+
+### v3.0.3 - 2019-09-26
+
+`FIXED`
+
+- A few permissions type retrieval bugs.
+
+### v3.0.2 - 2019-09-25
+
+`FIXED`
+
+- A bug on the `addPermission` method of the `PermissibleTrait`.
+
+### v3.0.1 - 2019-09-24
+
+`FIXED`
+
+- A few return types.
+
+### v3.0.0 - 2019-09-11
+
+- BC Break: PHP 7.2 is the minimum required PHP version
+- BC Break: Laravel 6.0 is the minimum supported Laravel version
+- Added PHP 7 Scalar type hints
+- Added PHP 7 Return type hints
+- Added `Sentinel::getCheckpoints()` method to retrieve all the added Checkpoints
+- Added `Sentinel::getActivationRepository()->get()` method to retrieve the valid Activation
+- Added `Sentinel::getReminderRepository()->get()` method to retrieve the valid Reminder
+- Updated the `Sentinel::getActivationRepository()->exists();` method to always return a boolean
+- Updated the `Sentinel::getActivationRepository()->completed();` method to always return a boolean
+- Updated the `Sentinel::getReminderRepository()->exists();` method to always return a boolean
+- Updated the `findByPersistenceCode()` to return a `PersistenceInterface` or `null` instead of `PersistenceInterface` or `bool`
+- Updated the `findUserByPersistenceCode()` to return `UserInterface` or `null` instead of `UserInterface` or `bool`
+- Fixed an issue where a call for EloquentUser::setPersistences was missing during bootstrap
+- Fixed an issue where personal permissions were not taking priority over pattern matching
+- Fixed an issue where the Throttling repository was not being set properly
+- Fixed an issue with the Native Cookie forget method
+- Fixed an issue where the events didn't had the payload passed correctly
+- Fixed an issue where the global throttles cache was not being cleared
+- Removed unnecessary dependencies
+- Removed integrations for both CodeIgniter and FuelPHP
+- Removed strict comparisons in favour of type hinting
+
+### v2.0.18 - 2019-08-14
+
+`ADDED`
+
+- Added support for Larastan
+- Added events for logging in and logging out
+
+`UPDATED`
+
+- Updated the `orWhere` query builder loop to lead with correct boolean constraint
+- Updated several tests for better coverage and overall quality
+
+`FIXED`
+
+- Fixed an issue with the throttling threshold not behaving as expected
+- Fixed an issue where a model with soft deletes was causing issues when force deleting
+- Fixed an issue where the default global threshold value was incorrect
+- Fixed an issue with the order of overrides registration on the Laravel service provider
+- Fixed an issue with the `checkPermission()` method not behaving not casting some permissions as `string`s
+- Fixed an issue where the `checkActivation` method on the Activations Checkpoint was not returning the completion status
+- Fixed a few docblock typos
 
 ### v2.0.17 - 2017-11-28
 
 `FIXED`
 
-- Incorrect docblock on the Illuminate Reminder Repositotry.
+- Incorrect docblock on the Illuminate Reminder Repository.
 
 `ADDED`
 
