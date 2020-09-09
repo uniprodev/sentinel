@@ -1,6 +1,6 @@
 {
-    "name": "cartalyst/sentinel",
-    "description": "PHP 7.2.5+ Fully-featured Authentication & Authorization System",
+    "name": "unipro/sentinel",
+    "description": "Duplicate internal version of cartalyst/sentinel Fully-featured Authentication & Authorization System",
     "keywords": [
         "php",
         "cartalyst",
