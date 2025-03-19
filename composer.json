@@ -1,5 +1,5 @@
 {
-    "name": "cartalyst/sentinel",
+    "name": "unipro/sentinel",
     "description": "PHP 8.2+ Fully-featured Authentication & Authorization System",
     "keywords": [
         "php",
