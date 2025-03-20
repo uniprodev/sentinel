@@ -11,10 +11,10 @@
  * bundled with this package in the LICENSE file.
  *
  * @package    Sentinel
- * @version    7.0.0
+ * @version    8.0.0
  * @author     Cartalyst LLC
  * @license    BSD License (3-clause)
- * @copyright  (c) 2011-2023, Cartalyst LLC
+ * @copyright  (c) 2011-2024, Cartalyst LLC
  * @link       https://cartalyst.com
  */
 
@@ -477,7 +477,11 @@ class EloquentUserTest extends TestCase
         $resolver->shouldReceive('connection')->andReturn($connection = m::mock(Connection::class));
 
         $model->setConnectionResolver($resolver);
-        $model->getConnection()->shouldReceive('getQueryGrammar')->andReturn($grammar = m::mock(Grammar::class));
+
+        $grammar = m::mock(Grammar::class);
+        $grammar->shouldReceive('isExpression');
+
+        $model->getConnection()->shouldReceive('getQueryGrammar')->andReturn($grammar);
         $model->getConnection()->shouldReceive('getPostProcessor')->andReturn($processor = m::mock(Processor::class));
 
         $model->getConnection()->shouldReceive('query')->andReturnUsing(function () use ($connection, $grammar, $processor) {

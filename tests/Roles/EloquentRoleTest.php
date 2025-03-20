@@ -11,10 +11,10 @@
  * bundled with this package in the LICENSE file.
  *
  * @package    Sentinel
- * @version    7.0.0
+ * @version    8.0.0
  * @author     Cartalyst LLC
  * @license    BSD License (3-clause)
- * @copyright  (c) 2011-2023, Cartalyst LLC
+ * @copyright  (c) 2011-2024, Cartalyst LLC
  * @link       https://cartalyst.com
  */
 
@@ -125,7 +125,10 @@ class EloquentRoleTest extends TestCase
 
         $model->setConnectionResolver($resolver);
 
-        $model->getConnection()->shouldReceive('getQueryGrammar')->andReturn(m::mock(Grammar::class));
+        $grammar = m::mock(Grammar::class);
+        $grammar->shouldReceive('isExpression');
+
+        $model->getConnection()->shouldReceive('getQueryGrammar')->andReturn($grammar);
         $model->getConnection()->shouldReceive('getPostProcessor')->andReturn(m::mock(Processor::class));
     }
 }

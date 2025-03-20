@@ -1,5 +1,9 @@
 # Changelog
 
+### v8.0.0 - 2024-07-04
+
+- Add Laravel 11 support
+
 ### v7.0.2 - 2023-08-10
 
 - Fix duplicated property

@@ -5,14 +5,15 @@
 [![Latest Version on Packagist][icon-version]][link-packagist]
 [![Total Downloads][icon-downloads]][link-packagist]
 
-Sentinel is a PHP 8.1+ framework agnostic fully-featured authentication & authorization system. It also provides additional features such as user roles and additional security features.
+Sentinel is a PHP 8.2+ framework agnostic fully-featured authentication & authorization system. It also provides additional features such as user roles and additional security features.
 
 An open source package by [Cartalyst](https://cartalyst.com), code well, rock on!
 
 ## Version Matrix
 
 Version | Laravel   | PHP Version
-------- | --------- | ------------
+------- |-----------| ------------
+8.x     | 11.0      | >= 8.2
 7.x     | 10.0      | >= 8.1
 6.x     | 9.0       | >= 8.0
 5.x     | 8.0       | >= 7.3
@@ -47,7 +48,7 @@ This software is released under the [BSD 3-Clause](LICENSE) License.
 [link-license]:   https://opensource.org/licenses/MIT
 [link-packagist]: https://packagist.org/packages/cartalyst/sentinel
 
-[icon-travis]:    https://travis-ci.com/cartalyst/sentinel.svg?branch=7.x
+[icon-travis]:    https://travis-ci.com/cartalyst/sentinel.svg?branch=8.x
 [icon-license]:   https://poser.pugx.org/cartalyst/sentinel/license
 [icon-version]:   https://poser.pugx.org/cartalyst/sentinel/version
 [icon-downloads]: https://poser.pugx.org/cartalyst/sentinel/downloads
