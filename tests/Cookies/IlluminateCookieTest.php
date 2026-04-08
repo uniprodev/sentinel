@@ -40,7 +40,7 @@ class IlluminateCookieTest extends TestCase
     /** @test */
     public function it_can_put_a_cookie()
     {
-        $jar = new CookieJar();
+        $jar = new CookieJar;
 
         $request = m::mock(Request::class);
         $request->shouldReceive('cookie')->with('foo')->once()->andReturn('bar');
@@ -85,7 +85,7 @@ class IlluminateCookieTest extends TestCase
     /** @test */
     public function it_can_forget_a_cookie()
     {
-        $jar = new CookieJar();
+        $jar = new CookieJar;
 
         $request = m::mock(Request::class);
         $request->shouldReceive('cookie')->with('foo')->once()->andReturn(null);

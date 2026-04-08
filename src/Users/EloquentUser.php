@@ -131,8 +131,6 @@ class EloquentUser extends Model implements PermissibleInterface, PersistableInt
 
     /**
      * Returns the activations relationship.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function activations(): HasMany
     {
@@ -141,8 +139,6 @@ class EloquentUser extends Model implements PermissibleInterface, PersistableInt
 
     /**
      * Returns the persistences relationship.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function persistences(): HasMany
     {
@@ -151,8 +147,6 @@ class EloquentUser extends Model implements PermissibleInterface, PersistableInt
 
     /**
      * Returns the reminders relationship.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function reminders(): HasMany
     {
@@ -161,8 +155,6 @@ class EloquentUser extends Model implements PermissibleInterface, PersistableInt
 
     /**
      * Returns the roles relationship.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function roles(): BelongsToMany
     {
@@ -171,8 +163,6 @@ class EloquentUser extends Model implements PermissibleInterface, PersistableInt
 
     /**
      * Returns the throttle relationship.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function throttle(): HasMany
     {
@@ -181,8 +171,6 @@ class EloquentUser extends Model implements PermissibleInterface, PersistableInt
 
     /**
      * Returns an array of login column names.
-     *
-     * @return array
      */
     public function getLoginNames(): array
     {
@@ -317,8 +305,6 @@ class EloquentUser extends Model implements PermissibleInterface, PersistableInt
 
     /**
      * Returns the roles model.
-     *
-     * @return string
      */
     public static function getRolesModel(): string
     {
@@ -327,10 +313,6 @@ class EloquentUser extends Model implements PermissibleInterface, PersistableInt
 
     /**
      * Sets the roles model.
-     *
-     * @param string $rolesModel
-     *
-     * @return void
      */
     public static function setRolesModel(string $rolesModel): void
     {
@@ -349,10 +331,6 @@ class EloquentUser extends Model implements PermissibleInterface, PersistableInt
 
     /**
      * Sets the persistences model.
-     *
-     * @param string $persistencesModel
-     *
-     * @return void
      */
     public static function setPersistencesModel(string $persistencesModel): void
     {
@@ -361,8 +339,6 @@ class EloquentUser extends Model implements PermissibleInterface, PersistableInt
 
     /**
      * Returns the activations model.
-     *
-     * @return string
      */
     public static function getActivationsModel(): string
     {
@@ -371,10 +347,6 @@ class EloquentUser extends Model implements PermissibleInterface, PersistableInt
 
     /**
      * Sets the activations model.
-     *
-     * @param string $activationsModel
-     *
-     * @return void
      */
     public static function setActivationsModel(string $activationsModel): void
     {
@@ -383,8 +355,6 @@ class EloquentUser extends Model implements PermissibleInterface, PersistableInt
 
     /**
      * Returns the reminders model.
-     *
-     * @return string
      */
     public static function getRemindersModel(): string
     {
@@ -393,10 +363,6 @@ class EloquentUser extends Model implements PermissibleInterface, PersistableInt
 
     /**
      * Sets the reminders model.
-     *
-     * @param string $remindersModel
-     *
-     * @return void
      */
     public static function setRemindersModel(string $remindersModel): void
     {
@@ -405,8 +371,6 @@ class EloquentUser extends Model implements PermissibleInterface, PersistableInt
 
     /**
      * Returns the throttling model.
-     *
-     * @return string
      */
     public static function getThrottlingModel(): string
     {
@@ -415,10 +379,6 @@ class EloquentUser extends Model implements PermissibleInterface, PersistableInt
 
     /**
      * Sets the throttling model.
-     *
-     * @param string $throttlingModel
-     *
-     * @return void
      */
     public static function setThrottlingModel(string $throttlingModel): void
     {
@@ -449,8 +409,7 @@ class EloquentUser extends Model implements PermissibleInterface, PersistableInt
      * Dynamically pass missing methods to the user.
      *
      * @param string $method
-     * @param array  $parameters
-     *
+     * @param array $parameters
      * @return mixed
      */
     public function __call($method, $parameters)
@@ -468,8 +427,6 @@ class EloquentUser extends Model implements PermissibleInterface, PersistableInt
 
     /**
      * Creates a permissions object.
-     *
-     * @return \Cartalyst\Sentinel\Permissions\PermissionsInterface
      */
     protected function createPermissions(): PermissionsInterface
     {

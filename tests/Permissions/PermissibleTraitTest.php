@@ -36,7 +36,7 @@ class PermissibleTraitTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->permissible = new PermissibleStub();
+        $this->permissible = new PermissibleStub;
     }
 
     /**
@@ -106,7 +106,7 @@ class PermissibleTraitTest extends TestCase
 
         $this->assertSame($permissions, $this->permissible->getPermissions());
 
-        $this->permissible = new PermissibleStub();
+        $this->permissible = new PermissibleStub;
 
         $this->permissible->addPermission('test1');
         $this->permissible->updatePermission('test2', false, true);

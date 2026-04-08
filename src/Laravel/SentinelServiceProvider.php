@@ -71,7 +71,7 @@ class SentinelServiceProvider extends ServiceProvider
     protected function prepareResources()
     {
         // Publish config
-        $config = realpath(__DIR__.'/../config/config.php');
+        $config = realpath(__DIR__ . '/../config/config.php');
 
         $this->mergeConfigFrom($config, 'cartalyst.sentinel');
 
@@ -80,10 +80,10 @@ class SentinelServiceProvider extends ServiceProvider
         ], 'config');
 
         // Publish migrations
-        $migrations = realpath(__DIR__.'/../migrations');
+        $migrations = realpath(__DIR__ . '/../migrations');
 
         $this->publishes([
-            $migrations => $this->app->databasePath().'/migrations',
+            $migrations => $this->app->databasePath() . '/migrations',
         ], 'migrations');
     }
 
@@ -168,7 +168,7 @@ class SentinelServiceProvider extends ServiceProvider
     protected function registerHasher()
     {
         $this->app->singleton('sentinel.hasher', function () {
-            return new NativeHasher();
+            return new NativeHasher;
         });
     }
 
@@ -189,9 +189,10 @@ class SentinelServiceProvider extends ServiceProvider
     /**
      * Registers the checkpoints.
      *
-     * @throws \InvalidArgumentException
      *
      * @return void
+     *
+     * @throws InvalidArgumentException
      */
     protected function registerCheckpoints()
     {
@@ -274,7 +275,7 @@ class SentinelServiceProvider extends ServiceProvider
             $throttling = $app['config']->get('cartalyst.sentinel.throttling');
 
             foreach (['global', 'ip', 'user'] as $type) {
-                ${"{$type}Interval"} = $throttling[$type]['interval'];
+                ${"{$type}Interval"}   = $throttling[$type]['interval'];
                 ${"{$type}Thresholds"} = $throttling[$type]['thresholds'];
             }
 
@@ -337,7 +338,7 @@ class SentinelServiceProvider extends ServiceProvider
             $sentinel->setRequestCredentials(function () use ($app) {
                 $request = $app['request'];
 
-                $login = $request->getUser();
+                $login    = $request->getUser();
                 $password = $request->getPassword();
 
                 if ($login === null && $password === null) {
@@ -405,8 +406,6 @@ class SentinelServiceProvider extends ServiceProvider
      * Sweep expired codes.
      *
      * @param mixed $repository
-     * @param array $lottery
-     *
      * @return void
      */
     protected function sweep($repository, array $lottery)
@@ -422,7 +421,6 @@ class SentinelServiceProvider extends ServiceProvider
     /**
      * Determine if the configuration odds hit the lottery.
      *
-     * @param array $lottery
      *
      * @return bool
      */

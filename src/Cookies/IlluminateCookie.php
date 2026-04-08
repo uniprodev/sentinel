@@ -28,14 +28,14 @@ class IlluminateCookie implements CookieInterface
     /**
      * The current request.
      *
-     * @var \Illuminate\Http\Request
+     * @var Request
      */
     protected $request;
 
     /**
      * The cookie object.
      *
-     * @var \Illuminate\Cookie\CookieJar
+     * @var CookieJar
      */
     protected $jar;
 
@@ -49,10 +49,7 @@ class IlluminateCookie implements CookieInterface
     /**
      * Constructor.
      *
-     * @param \Illuminate\Http\Request     $request
-     * @param \Illuminate\Cookie\CookieJar $jar
-     * @param string                       $key
-     *
+     * @param string $key
      * @return void
      */
     public function __construct(Request $request, CookieJar $jar, $key = null)

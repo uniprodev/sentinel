@@ -1,0 +1,35 @@
+{
+    "preset": "laravel",
+    "rules": {
+        "binary_operator_spaces": {
+            "operators": {
+                "=": "align",
+                "=>": "align"
+            }
+        },
+        "concat_space": {
+            "spacing": "one"
+        },
+        "ordered_imports": {
+            "sort_algorithm": "length",
+            "imports_order": [
+                "class",
+                "function",
+                "const"
+            ]
+        },
+        "function_declaration": {
+            "closure_fn_spacing": "none"
+        },
+        "cast_spaces": {
+            "space": "none"
+        },
+        "single_blank_line_at_eof": false,
+        "phpdoc_align": {
+            "align": "left",
+            "spacing": {
+                "param": 1
+            }
+        }
+    }
+}

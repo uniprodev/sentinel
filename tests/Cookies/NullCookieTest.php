@@ -28,7 +28,7 @@ class NullCookieTest extends TestCase
     /**
      * The cookie instance.
      *
-     * @var \Cartalyst\Sentinel\Cookies\NullCookie
+     * @var NullCookie
      */
     protected $cookie;
 
@@ -37,7 +37,7 @@ class NullCookieTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->cookie = new NullCookie();
+        $this->cookie = new NullCookie;
     }
 
     /**

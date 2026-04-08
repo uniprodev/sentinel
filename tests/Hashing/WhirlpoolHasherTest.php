@@ -29,7 +29,7 @@ class WhirlpoolHasherTest extends BaseHashing
      */
     protected function setUp(): void
     {
-        $this->hasher = new WhirlpoolHasher();
+        $this->hasher = new WhirlpoolHasher;
 
         parent::setUp();
     }

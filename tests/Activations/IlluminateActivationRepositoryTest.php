@@ -26,6 +26,7 @@ use PHPUnit\Framework\TestCase;
 use Illuminate\Database\Eloquent\Builder;
 use Cartalyst\Sentinel\Users\UserInterface;
 use Cartalyst\Sentinel\Activations\EloquentActivation;
+use Cartalyst\Sentinel\Activations\ActivationRepositoryInterface;
 use Cartalyst\Sentinel\Activations\IlluminateActivationRepository;
 
 class IlluminateActivationRepositoryTest extends TestCase
@@ -33,14 +34,14 @@ class IlluminateActivationRepositoryTest extends TestCase
     /**
      * The Activations repository instance.
      *
-     * @var \Cartalyst\Sentinel\Activations\ActivationRepositoryInterface
+     * @var ActivationRepositoryInterface
      */
     protected $activations;
 
     /**
      * The Eloquent Activation instance.
      *
-     * @var \Cartalyst\Sentinel\Activations\EloquentActivation
+     * @var EloquentActivation
      */
     protected $model;
 

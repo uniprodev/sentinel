@@ -22,13 +22,14 @@ namespace Cartalyst\Sentinel\Tests\Hashing;
 
 use RuntimeException;
 use PHPUnit\Framework\TestCase;
+use Cartalyst\Sentinel\Hashing\HasherInterface;
 
 abstract class BaseHashing extends TestCase
 {
     /**
      * The Hasher instance.
      *
-     * @var \Cartalyst\Sentinel\Hashing\HasherInterface
+     * @var HasherInterface
      */
     protected $hasher;
 
@@ -38,7 +39,7 @@ abstract class BaseHashing extends TestCase
     protected function setUp(): void
     {
         if (! $this->hasher) {
-            throw new RuntimeException();
+            throw new RuntimeException;
         }
     }
 

@@ -48,12 +48,10 @@ trait PermissionsTrait
     /**
      * Constructor.
      *
-     * @param array|null $permissions
-     * @param array|null $secondaryPermissions
      *
      * @return void
      */
-    public function __construct(array $permissions = null, array $secondaryPermissions = null)
+    public function __construct(?array $permissions = null, ?array $secondaryPermissions = null)
     {
         $this->permissions = $permissions;
 
@@ -102,8 +100,6 @@ trait PermissionsTrait
 
     /**
      * Returns the main permissions.
-     *
-     * @return array
      */
     public function getPermissions(): array
     {
@@ -112,8 +108,6 @@ trait PermissionsTrait
 
     /**
      * Returns the secondary permissions.
-     *
-     * @return array
      */
     public function getSecondaryPermissions(): array
     {
@@ -123,7 +117,6 @@ trait PermissionsTrait
     /**
      * Sets secondary permissions.
      *
-     * @param array $secondaryPermissions
      *
      * @return $this
      */
@@ -138,8 +131,6 @@ trait PermissionsTrait
 
     /**
      * Lazily grab the prepared permissions.
-     *
-     * @return array
      */
     protected function getPreparedPermissions(): array
     {
@@ -152,11 +143,6 @@ trait PermissionsTrait
 
     /**
      * Does the heavy lifting of preparing permissions.
-     *
-     * @param array $prepared
-     * @param array $permissions
-     *
-     * @return void
      */
     protected function preparePermissions(array &$prepared, array $permissions): void
     {
@@ -180,20 +166,16 @@ trait PermissionsTrait
     /**
      * Takes the given permission key and inspects it for a class & method. If
      * it exists, methods may be comma-separated, e.g. Class@method1,method2.
-     *
-     * @param string $key
-     *
-     * @return array
      */
     protected function extractClassPermissions(string $key): array
     {
         if (! Str::contains($key, '@')) {
-            return (array) $key;
+            return (array)$key;
         }
 
         $keys = [];
 
-        list($class, $methods) = explode('@', $key);
+        [$class, $methods] = explode('@', $key);
 
         foreach (explode(',', $methods) as $method) {
             $keys[] = "{$class}@{$method}";
@@ -204,11 +186,6 @@ trait PermissionsTrait
 
     /**
      * Checks a permission in the prepared array, including wildcard checks and permissions.
-     *
-     * @param array  $prepared
-     * @param string $permission
-     *
-     * @return bool
      */
     protected function checkPermission(array $prepared, string $permission): bool
     {
@@ -217,7 +194,7 @@ trait PermissionsTrait
         }
 
         foreach ($prepared as $key => $value) {
-            $key = (string) $key;
+            $key = (string)$key;
 
             if ((Str::is($permission, $key) || Str::is($key, $permission)) && $value === true) {
                 return true;
@@ -229,8 +206,6 @@ trait PermissionsTrait
 
     /**
      * Returns the prepared permissions.
-     *
-     * @return array
      */
     abstract protected function createPreparedPermissions(): array;
 }

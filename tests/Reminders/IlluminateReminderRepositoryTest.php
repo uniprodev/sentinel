@@ -33,28 +33,28 @@ class IlluminateReminderRepositoryTest extends TestCase
     /**
      * The User Repository instance.
      *
-     * @var \Cartalyst\Sentinel\Users\IlluminateUserRepository
+     * @var IlluminateUserRepository
      */
     protected $users;
 
     /**
      * The Eloquent Builder instance.
      *
-     * @var \Illuminate\Database\Eloquent\Builder
+     * @var Builder
      */
     protected $query;
 
     /**
      * The Eloquent Reminder instance.
      *
-     * @var \Cartalyst\Sentinel\Reminders\EloquentReminder
+     * @var EloquentReminder
      */
     protected $model;
 
     /**
      * The Reminder Repository instance.
      *
-     * @var \Cartalyst\Sentinel\Reminders\IlluminateReminderRepository
+     * @var IlluminateReminderRepository
      */
     protected $reminders;
 

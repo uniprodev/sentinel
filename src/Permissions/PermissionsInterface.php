@@ -26,8 +26,6 @@ interface PermissionsInterface
      * Returns if access is available for all given permissions.
      *
      * @param array|string $permissions
-     *
-     * @return bool
      */
     public function hasAccess($permissions): bool;
 
@@ -35,8 +33,6 @@ interface PermissionsInterface
      * Returns if access is available for any given permissions.
      *
      * @param array|string $permissions
-     *
-     * @return bool
      */
     public function hasAnyAccess($permissions): bool;
 }

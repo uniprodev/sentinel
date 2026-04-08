@@ -37,7 +37,7 @@ class EloquentReminderTest extends TestCase
     /** @test */
     public function it_can_get_the_completed_attribute_as_a_boolean()
     {
-        $reminder = new EloquentReminder();
+        $reminder = new EloquentReminder;
 
         $reminder->completed = 1;
 

@@ -42,7 +42,7 @@ class EloquentUserTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->user = new EloquentUser();
+        $this->user = new EloquentUser;
     }
 
     /**
@@ -83,6 +83,7 @@ class EloquentUserTest extends TestCase
 
     /**
      * @test
+     *
      * @runInSeparateProcess
      */
     public function it_can_set_and_get_the_roles_model()
@@ -94,6 +95,7 @@ class EloquentUserTest extends TestCase
 
     /**
      * @test
+     *
      * @runInSeparateProcess
      */
     public function it_can_set_and_get_the_persistences_model()
@@ -105,6 +107,7 @@ class EloquentUserTest extends TestCase
 
     /**
      * @test
+     *
      * @runInSeparateProcess
      */
     public function it_can_set_and_get_the_activations_model()
@@ -116,6 +119,7 @@ class EloquentUserTest extends TestCase
 
     /**
      * @test
+     *
      * @runInSeparateProcess
      */
     public function it_can_set_and_get_the_reminders_model()
@@ -127,6 +131,7 @@ class EloquentUserTest extends TestCase
 
     /**
      * @test
+     *
      * @runInSeparateProcess
      */
     public function it_can_set_and_get_the_throttling_model()
@@ -419,8 +424,7 @@ class EloquentUserTest extends TestCase
 
         $mockRole->shouldReceive('getPermissions')
             ->once()
-            ->andReturn($permissions)
-        ;
+            ->andReturn($permissions);
 
         $this->assertTrue($this->user->hasAccess('foo'));
         $this->assertFalse($this->user->hasAccess('bar'));
@@ -438,8 +442,7 @@ class EloquentUserTest extends TestCase
 
         $mockRole->shouldReceive('getPermissions')
             ->once()
-            ->andReturn($permissions)
-        ;
+            ->andReturn($permissions);
 
         $this->assertTrue($this->user->hasAccess('foo'));
         $this->assertFalse($this->user->hasAccess('bar'));

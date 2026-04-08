@@ -25,7 +25,9 @@ use Carbon\Carbon;
 use PHPUnit\Framework\TestCase;
 use Cartalyst\Sentinel\Users\EloquentUser;
 use Cartalyst\Sentinel\Checkpoints\ThrottleCheckpoint;
+use Cartalyst\Sentinel\Checkpoints\ThrottleCheckpoints;
 use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
+use Cartalyst\Sentinel\Throttling\ThrottleRepositoryInterface;
 use Cartalyst\Sentinel\Throttling\IlluminateThrottleRepository;
 
 class ThrottleCheckpointTest extends TestCase
@@ -33,21 +35,21 @@ class ThrottleCheckpointTest extends TestCase
     /**
      * The Checkpoint instance.
      *
-     * @var \Cartalyst\Sentinel\Checkpoints\ThrottleCheckpoints
+     * @var ThrottleCheckpoints
      */
     protected $checkpoint;
 
     /**
      * The Eloquent User instance.
      *
-     * @var \Cartalyst\Sentinel\Users\EloquentUser
+     * @var EloquentUser
      */
     protected $user;
 
     /**
      * The Users repository instance.
      *
-     * @var \Cartalyst\Sentinel\Throttling\ThrottleRepositoryInterface
+     * @var ThrottleRepositoryInterface
      */
     protected $throttle;
 
@@ -109,7 +111,7 @@ class ThrottleCheckpointTest extends TestCase
     }
 
     /** @test */
-    public function testWithIpAddress()
+    public function test_with_ip_address()
     {
         $this->throttle->shouldReceive('globalDelay')->once();
         $this->throttle->shouldReceive('ipDelay')->once();
@@ -122,7 +124,7 @@ class ThrottleCheckpointTest extends TestCase
     }
 
     /** @test */
-    public function testFailedLogin()
+    public function test_failed_login()
     {
         $this->expectException(ThrottlingException::class);
         $this->expectExceptionMessage('Too many unsuccessful attempts have been made globally, logins are locked for another [10] second(s).');
@@ -133,7 +135,7 @@ class ThrottleCheckpointTest extends TestCase
     }
 
     /** @test */
-    public function testThrowsExceptionWithIpDelay()
+    public function test_throws_exception_with_ip_delay()
     {
         $this->expectException(ThrottlingException::class);
         $this->expectExceptionMessage('Suspicious activity has occured on your IP address and you have been denied access for another [10] second(s).');
@@ -145,7 +147,7 @@ class ThrottleCheckpointTest extends TestCase
     }
 
     /** @test */
-    public function testThrowsExceptionWithUserDelay()
+    public function test_throws_exception_with_user_delay()
     {
         $this->expectException(ThrottlingException::class);
         $this->expectExceptionMessage('Too many unsuccessful login attempts have been made against your account. Please try again after another [10] second(s).');
@@ -158,7 +160,7 @@ class ThrottleCheckpointTest extends TestCase
     }
 
     /** @test */
-    public function testGetThrottlingExceptionAttributes()
+    public function test_get_throttling_exception_attributes()
     {
         $this->throttle->shouldReceive('globalDelay')->once();
         $this->throttle->shouldReceive('ipDelay')->once()->andReturn(0);

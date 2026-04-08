@@ -35,7 +35,7 @@ class EloquentPersistenceTest extends TestCase
     /**
      * The Persistence instance.
      *
-     * @var \Cartalyst\Sentinel\Persistences\EloquentPersistence
+     * @var EloquentPersistence
      */
     protected $persistence;
 
@@ -44,7 +44,7 @@ class EloquentPersistenceTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->persistence = new EloquentPersistence();
+        $this->persistence = new EloquentPersistence;
     }
 
     /**

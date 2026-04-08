@@ -25,6 +25,7 @@ use PHPUnit\Framework\TestCase;
 use Cartalyst\Sentinel\Users\EloquentUser;
 use Cartalyst\Sentinel\Checkpoints\ActivationCheckpoint;
 use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
+use Cartalyst\Sentinel\Activations\ActivationRepositoryInterface;
 use Cartalyst\Sentinel\Activations\IlluminateActivationRepository;
 
 class ActivationCheckpointTest extends TestCase
@@ -32,14 +33,14 @@ class ActivationCheckpointTest extends TestCase
     /**
      * The Activations repository instance.
      *
-     * @var \Cartalyst\Sentinel\Activations\ActivationRepositoryInterface
+     * @var ActivationRepositoryInterface
      */
     protected $activations;
 
     /**
      * The Eloquent User instance.
      *
-     * @var \Cartalyst\Sentinel\Users\EloquentUser
+     * @var EloquentUser
      */
     protected $user;
 

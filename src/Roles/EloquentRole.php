@@ -80,8 +80,6 @@ class EloquentRole extends Model implements PermissibleInterface, RoleInterface
 
     /**
      * The Users relationship.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function users(): BelongsToMany
     {
@@ -132,8 +130,7 @@ class EloquentRole extends Model implements PermissibleInterface, RoleInterface
      * Dynamically pass missing methods to the permissions.
      *
      * @param string $method
-     * @param array  $parameters
-     *
+     * @param array $parameters
      * @return mixed
      */
     public function __call($method, $parameters)

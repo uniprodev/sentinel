@@ -43,49 +43,49 @@ class SentinelTest extends TestCase
     /**
      * The Illuminate Events Dispatcher instance.
      *
-     * @var \Illuminate\Contracts\Events\Dispatcher
+     * @var Dispatcher
      */
     protected $dispatcher;
 
     /**
      * The Sentinel instance.
      *
-     * @var \Cartalyst\Sentinel\Sentinel
+     * @var Sentinel
      */
     protected $sentinel;
 
     /**
      * The Users repository instance.
      *
-     * @var \Cartalyst\Sentinel\Users\UserRepositoryInterface
+     * @var UserRepositoryInterface
      */
     protected $users;
 
     /**
      * The Roles repository instance.
      *
-     * @var \Cartalyst\Sentinel\Roles\RoleRepositoryInterface
+     * @var RoleRepositoryInterface
      */
     protected $roles;
 
     /**
      * The Activations repository instance.
      *
-     * @var \Cartalyst\Sentinel\Activations\ActivationRepositoryInterface
+     * @var ActivationRepositoryInterface
      */
     protected $activations;
 
     /**
      * The Persistences repository instance.
      *
-     * @var \Cartalyst\Sentinel\Persistences\PersistenceRepositoryInterface
+     * @var PersistenceRepositoryInterface
      */
     protected $persistences;
 
     /**
      * The Eloquent User instance.
      *
-     * @var \Cartalyst\Sentinel\Users\EloquentUser
+     * @var EloquentUser
      */
     protected $user;
 
@@ -138,12 +138,10 @@ class SentinelTest extends TestCase
         ];
 
         $this->dispatcher->shouldReceive('dispatch')->once()
-            ->with('sentinel.registering', [$credentials])
-        ;
+            ->with('sentinel.registering', [$credentials]);
 
         $this->dispatcher->shouldReceive('dispatch')->once()
-            ->with('sentinel.registered', $this->user)
-        ;
+            ->with('sentinel.registered', $this->user);
 
         $result = $this->sentinel->register($credentials);
 
@@ -270,14 +268,14 @@ class SentinelTest extends TestCase
         $this->assertFalse($valid);
     }
 
-    public function testGuest1()
+    public function test_guest1()
     {
         $this->persistences->shouldReceive('check')->once();
 
         $this->assertTrue($this->sentinel->guest());
     }
 
-    public function testGuest2()
+    public function test_guest2()
     {
         $this->sentinel->setUser($this->user);
 
@@ -299,20 +297,16 @@ class SentinelTest extends TestCase
         $this->users->shouldReceive('recordLogin')->once()->andReturn(true);
 
         $this->dispatcher->shouldReceive('until')->once()
-            ->with('sentinel.authenticating', [$credentials])
-        ;
+            ->with('sentinel.authenticating', [$credentials]);
 
         $this->dispatcher->shouldReceive('dispatch')->once()
-            ->with('sentinel.logging-in', $this->user)
-        ;
+            ->with('sentinel.logging-in', $this->user);
 
         $this->dispatcher->shouldReceive('dispatch')->once()
-            ->with('sentinel.logged-in', $this->user)
-        ;
+            ->with('sentinel.logged-in', $this->user);
 
         $this->dispatcher->shouldReceive('dispatch')->once()
-            ->with('sentinel.authenticated', $this->user)
-        ;
+            ->with('sentinel.authenticated', $this->user);
 
         $this->assertSame($this->user, $this->sentinel->authenticate($credentials));
     }
@@ -325,20 +319,16 @@ class SentinelTest extends TestCase
         $this->users->shouldReceive('recordLogin')->once()->andReturn(true);
 
         $this->dispatcher->shouldReceive('until')->once()
-            ->with('sentinel.authenticating', [$this->user])
-        ;
+            ->with('sentinel.authenticating', [$this->user]);
 
         $this->dispatcher->shouldReceive('dispatch')->once()
-            ->with('sentinel.logging-in', $this->user)
-        ;
+            ->with('sentinel.logging-in', $this->user);
 
         $this->dispatcher->shouldReceive('dispatch')->once()
-            ->with('sentinel.logged-in', $this->user)
-        ;
+            ->with('sentinel.logged-in', $this->user);
 
         $this->dispatcher->shouldReceive('dispatch')->once()
-            ->with('sentinel.authenticated', $this->user)
-        ;
+            ->with('sentinel.authenticated', $this->user);
 
         $this->assertSame($this->user, $this->sentinel->authenticate($this->user));
     }
@@ -758,7 +748,7 @@ class SentinelTest extends TestCase
     }
 
     /** @test */
-    public function it_can_pass_method_calls_to_a_user_repository_via_findUserBy()
+    public function it_can_pass_method_calls_to_a_user_repository_via_find_user_by()
     {
         $this->users->shouldReceive('findById')->once()->andReturn(m::mock(EloquentUser::class));
 
@@ -768,7 +758,7 @@ class SentinelTest extends TestCase
     }
 
     /** @test */
-    public function it_can_pass_method_calls_to_a_role_repository_via_findRoleBy()
+    public function it_can_pass_method_calls_to_a_role_repository_via_find_role_by()
     {
         $this->roles->shouldReceive('findById')->once()->andReturn(m::mock(EloquentRole::class));
 

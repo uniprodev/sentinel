@@ -114,7 +114,7 @@ class IlluminateUserRepositoryTest extends TestCase
             $this->query->shouldReceive('where')->with('email', 'foo@example.com');
             $this->query->shouldReceive('orWhere')->with('username', 'foo@example.com');
 
-            return null === $argument($this->query);
+            return $argument($this->query) === null;
         }))->andReturn($this->model);
         $this->query->shouldReceive('first')->once()->andReturn($this->model);
 
@@ -134,7 +134,7 @@ class IlluminateUserRepositoryTest extends TestCase
         $this->query->shouldReceive('whereNested')->with(m::on(function ($argument) {
             $this->query->shouldReceive('where')->with('email', 'foo@example.com');
 
-            return null === $argument($this->query);
+            return $argument($this->query) === null;
         }))->andReturn($this->model);
         $this->query->shouldReceive('first')->once()->andReturn($this->model);
 
@@ -183,7 +183,7 @@ class IlluminateUserRepositoryTest extends TestCase
         $this->query->shouldReceive('whereHas')->with('persistences', m::on(function ($argument) {
             $this->query->shouldReceive('where')->with('code', 'foobar');
 
-            return null === $argument($this->query);
+            return $argument($this->query) === null;
         }))->andReturn($this->model);
         $this->model->shouldReceive('first')->once()->andReturn($this->model);
 

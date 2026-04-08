@@ -29,7 +29,7 @@ class SentinelBootstrapperTest extends TestCase
     /** @test */
     public function it_can_be_instantiated()
     {
-        $bootstrapper = new SentinelBootstrapper();
+        $bootstrapper = new SentinelBootstrapper;
 
         $sentinel = $bootstrapper->createSentinel();
 

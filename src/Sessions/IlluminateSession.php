@@ -20,6 +20,7 @@
 
 namespace Cartalyst\Sentinel\Sessions;
 
+use Illuminate\Session\Store;
 use Illuminate\Session\Store as SessionStore;
 
 class IlluminateSession implements SessionInterface
@@ -27,7 +28,7 @@ class IlluminateSession implements SessionInterface
     /**
      * The session store object.
      *
-     * @var \Illuminate\Session\Store
+     * @var Store
      */
     protected $session;
 
@@ -41,12 +42,10 @@ class IlluminateSession implements SessionInterface
     /**
      * Constructor.
      *
-     * @param \Illuminate\Session\Store $session
-     * @param string                    $key
      *
      * @return void
      */
-    public function __construct(SessionStore $session, string $key = null)
+    public function __construct(SessionStore $session, ?string $key = null)
     {
         $this->session = $session;
 

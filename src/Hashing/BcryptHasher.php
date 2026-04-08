@@ -42,7 +42,7 @@ class BcryptHasher implements HasherInterface
 
         $prefix = '$2y$';
 
-        return crypt($value, $prefix.$strength.'$'.$salt.'$');
+        return crypt($value, $prefix . $strength . '$' . $salt . '$');
     }
 
     /**

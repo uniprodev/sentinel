@@ -20,6 +20,4 @@
 
 namespace Cartalyst\Sentinel\Persistences;
 
-interface PersistenceInterface
-{
-}
+interface PersistenceInterface {}

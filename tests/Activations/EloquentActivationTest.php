@@ -29,7 +29,7 @@ class EloquentActivationTest extends TestCase
     /**
      * The Activation Eloquent instance.
      *
-     * @var \Cartalyst\Sentinel\Activations\EloquentActivation
+     * @var EloquentActivation
      */
     protected $activation;
 
@@ -38,7 +38,7 @@ class EloquentActivationTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->activation = new EloquentActivation();
+        $this->activation = new EloquentActivation;
     }
 
     /**

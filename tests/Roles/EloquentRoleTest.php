@@ -40,7 +40,7 @@ class EloquentRoleTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->role = new EloquentRole();
+        $this->role = new EloquentRole;
     }
 
     /**

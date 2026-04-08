@@ -28,8 +28,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Cartalyst\Sentinel\Users\UserInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Cartalyst\Sentinel\Cookies\CookieInterface;
-use Cartalyst\Sentinel\Persistences\EloquentPersistence;
 use Cartalyst\Sentinel\Sessions\SessionInterface;
+use Cartalyst\Sentinel\Persistences\EloquentPersistence;
 use Cartalyst\Sentinel\Persistences\PersistableInterface;
 use Cartalyst\Sentinel\Persistences\PersistenceInterface;
 use Cartalyst\Sentinel\Persistences\IlluminatePersistenceRepository;
@@ -118,7 +118,7 @@ class IlluminatePersistenceRepositoryTest extends TestCase
     {
         $user = m::mock(UserInterface::class);
 
-        $persistence       = new EloquentPersistence();
+        $persistence       = new EloquentPersistence;
         $persistence->user = $user;
 
         $query = m::mock(Builder::class);

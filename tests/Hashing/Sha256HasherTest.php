@@ -29,7 +29,7 @@ class Sha256HasherTest extends BaseHashing
      */
     protected function setUp(): void
     {
-        $this->hasher = new Sha256Hasher();
+        $this->hasher = new Sha256Hasher;
 
         parent::setUp();
     }

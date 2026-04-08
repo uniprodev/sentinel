@@ -37,6 +37,7 @@ class NativeSessionTest extends TestCase
 
     /**
      * @test
+     *
      * @runInSeparateProcess
      */
     public function it_can_start_the_session()
@@ -51,7 +52,7 @@ class NativeSessionTest extends TestCase
     {
         $session = new NativeSession('__sentinel');
 
-        $class      = new stdClass();
+        $class      = new stdClass;
         $class->foo = 'bar';
 
         $session->put($class);
@@ -68,7 +69,7 @@ class NativeSessionTest extends TestCase
 
         $this->assertNull($session->get());
 
-        $class      = new stdClass();
+        $class      = new stdClass;
         $class->foo = 'bar';
 
         $_SESSION['__sentinel'] = serialize($class);

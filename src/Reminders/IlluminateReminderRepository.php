@@ -33,7 +33,7 @@ class IlluminateReminderRepository implements ReminderRepositoryInterface
     /**
      * The Users repository instance.
      *
-     * @var \Cartalyst\Sentinel\Users\UserRepositoryInterface
+     * @var UserRepositoryInterface
      */
     protected $users;
 
@@ -54,13 +54,10 @@ class IlluminateReminderRepository implements ReminderRepositoryInterface
     /**
      * Constructor.
      *
-     * @param \Cartalyst\Sentinel\Users\UserRepositoryInterface $users
-     * @param string                                            $model
-     * @param int                                               $expires
      *
      * @return void
      */
-    public function __construct(UserRepositoryInterface $users, string $model = null, int $expires = null)
+    public function __construct(UserRepositoryInterface $users, ?string $model = null, ?int $expires = null)
     {
         $this->users = $users;
 
@@ -93,7 +90,7 @@ class IlluminateReminderRepository implements ReminderRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function get(UserInterface $user, string $code = null)
+    public function get(UserInterface $user, ?string $code = null)
     {
         $expires = $this->expires();
 
@@ -102,8 +99,7 @@ class IlluminateReminderRepository implements ReminderRepositoryInterface
             ->newQuery()
             ->where('user_id', $user->getUserId())
             ->where('completed', false)
-            ->where('created_at', '>', $expires)
-        ;
+            ->where('created_at', '>', $expires);
 
         if ($code) {
             $reminder->where('code', $code);
@@ -115,9 +111,9 @@ class IlluminateReminderRepository implements ReminderRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function exists(UserInterface $user, string $code = null): bool
+    public function exists(UserInterface $user, ?string $code = null): bool
     {
-        return (bool) $this->get($user, $code);
+        return (bool)$this->get($user, $code);
     }
 
     /**
@@ -134,8 +130,7 @@ class IlluminateReminderRepository implements ReminderRepositoryInterface
             ->where('code', $code)
             ->where('completed', false)
             ->where('created_at', '>', $expires)
-            ->first()
-        ;
+            ->first();
 
         if ($reminder === null) {
             return false;
@@ -173,14 +168,11 @@ class IlluminateReminderRepository implements ReminderRepositoryInterface
             ->newQuery()
             ->where('completed', false)
             ->where('created_at', '<', $expires)
-            ->delete()
-        ;
+            ->delete();
     }
 
     /**
      * Returns the expiration date.
-     *
-     * @return \Carbon\Carbon
      */
     protected function expires(): Carbon
     {
@@ -189,8 +181,6 @@ class IlluminateReminderRepository implements ReminderRepositoryInterface
 
     /**
      * Returns the random string used for the reminder code.
-     *
-     * @return string
      */
     protected function generateReminderCode(): string
     {

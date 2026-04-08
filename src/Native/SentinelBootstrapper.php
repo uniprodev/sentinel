@@ -56,7 +56,6 @@ class SentinelBootstrapper
      * Constructor.
      *
      * @param array $config
-     *
      * @return void
      */
     public function __construct($config = null)
@@ -64,14 +63,14 @@ class SentinelBootstrapper
         if (is_string($config)) {
             $this->config = new ConfigRepository($config);
         } else {
-            $this->config = $config ?: new ConfigRepository();
+            $this->config = $config ?: new ConfigRepository;
         }
     }
 
     /**
      * Creates a sentinel instance.
      *
-     * @return \Cartalyst\Sentinel\Sentinel
+     * @return Sentinel
      */
     public function createSentinel()
     {
@@ -113,7 +112,7 @@ class SentinelBootstrapper
     /**
      * Creates a persistences repository.
      *
-     * @return \Cartalyst\Sentinel\Persistences\IlluminatePersistenceRepository
+     * @return IlluminatePersistenceRepository
      */
     protected function createPersistence()
     {
@@ -137,7 +136,7 @@ class SentinelBootstrapper
     /**
      * Creates a session.
      *
-     * @return \Cartalyst\Sentinel\Sessions\NativeSession
+     * @return NativeSession
      */
     protected function createSession()
     {
@@ -147,7 +146,7 @@ class SentinelBootstrapper
     /**
      * Creates a cookie.
      *
-     * @return \Cartalyst\Sentinel\Cookies\NativeCookie
+     * @return NativeCookie
      */
     protected function createCookie()
     {
@@ -157,7 +156,7 @@ class SentinelBootstrapper
     /**
      * Creates a user repository.
      *
-     * @return \Cartalyst\Sentinel\Users\IlluminateUserRepository
+     * @return IlluminateUserRepository
      */
     protected function createUsers()
     {
@@ -183,17 +182,17 @@ class SentinelBootstrapper
     /**
      * Creates a hasher.
      *
-     * @return \Cartalyst\Sentinel\Hashing\NativeHasher
+     * @return NativeHasher
      */
     protected function createHasher()
     {
-        return new NativeHasher();
+        return new NativeHasher;
     }
 
     /**
      * Creates a role repository.
      *
-     * @return \Cartalyst\Sentinel\Roles\IlluminateRoleRepository
+     * @return IlluminateRoleRepository
      */
     protected function createRoles()
     {
@@ -211,7 +210,7 @@ class SentinelBootstrapper
     /**
      * Creates an activation repository.
      *
-     * @return \Cartalyst\Sentinel\Activations\IlluminateActivationRepository
+     * @return IlluminateActivationRepository
      */
     protected function createActivations()
     {
@@ -237,9 +236,8 @@ class SentinelBootstrapper
     /**
      * Create an activation checkpoint.
      *
-     * @param \Cartalyst\Sentinel\Activations\IlluminateActivationRepository $activations
      *
-     * @return \Cartalyst\Sentinel\Checkpoints\ActivationCheckpoint
+     * @return ActivationCheckpoint
      */
     protected function createActivationCheckpoint(IlluminateActivationRepository $activations)
     {
@@ -249,13 +247,10 @@ class SentinelBootstrapper
     /**
      * Create activation and throttling checkpoints.
      *
-     * @param \Cartalyst\Sentinel\Activations\IlluminateActivationRepository $activations
-     * @param \Cartalyst\Sentinel\Throttling\IlluminateThrottleRepository    $throttle
-     * @param string                                                         $ipAddress
-     *
-     * @throws \InvalidArgumentException
-     *
+     * @param string $ipAddress
      * @return array
+     *
+     * @throws InvalidArgumentException
      */
     protected function createCheckpoints(IlluminateActivationRepository $activations, IlluminateThrottleRepository $throttle, $ipAddress)
     {
@@ -281,10 +276,8 @@ class SentinelBootstrapper
     /**
      * Create a throttle checkpoint.
      *
-     * @param \Cartalyst\Sentinel\Throttling\IlluminateThrottleRepository $throttle
-     * @param string                                                      $ipAddress
-     *
-     * @return \Cartalyst\Sentinel\Checkpoints\ThrottleCheckpoint
+     * @param string $ipAddress
+     * @return ThrottleCheckpoint
      */
     protected function createThrottleCheckpoint(IlluminateThrottleRepository $throttle, $ipAddress)
     {
@@ -294,7 +287,7 @@ class SentinelBootstrapper
     /**
      * Create a throttling repository.
      *
-     * @return \Cartalyst\Sentinel\Throttling\IlluminateThrottleRepository
+     * @return IlluminateThrottleRepository
      */
     protected function createThrottling()
     {
@@ -325,7 +318,7 @@ class SentinelBootstrapper
     protected function getEventDispatcher()
     {
         if (! $this->dispatcher) {
-            $this->dispatcher = new Dispatcher();
+            $this->dispatcher = new Dispatcher;
         }
 
         return $this->dispatcher;
@@ -334,9 +327,8 @@ class SentinelBootstrapper
     /**
      * Create a reminder repository.
      *
-     * @param \Cartalyst\Sentinel\Users\IlluminateUserRepository $users
      *
-     * @return \Cartalyst\Sentinel\Reminders\IlluminateReminderRepository
+     * @return IlluminateReminderRepository
      */
     protected function createReminders(IlluminateUserRepository $users)
     {
