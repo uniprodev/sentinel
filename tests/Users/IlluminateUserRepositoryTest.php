@@ -39,9 +39,6 @@ class IlluminateUserRepositoryTest extends TestCase
 
     protected $users;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->hasher = m::mock(NativeHasher::class);
@@ -55,6 +52,16 @@ class IlluminateUserRepositoryTest extends TestCase
             $this->hasher,
         ]);
         $this->users->shouldReceive('createModel')->andReturn($this->model);
+    }
+
+    protected function tearDown(): void
+    {
+        $this->hasher = null;
+        $this->query  = null;
+        $this->model  = null;
+        $this->users  = null;
+
+        m::close();
     }
 
     #[Test]

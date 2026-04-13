@@ -45,6 +45,11 @@ class IlluminateRoleRepositoryTest extends TestCase
         $this->roles->shouldReceive('createModel')->andReturn($this->model);
     }
 
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     #[Test]
     public function it_can_be_instantiated(): void
     {

@@ -48,6 +48,11 @@ class IlluminatePersistenceRepositoryTest extends TestCase
         $this->cookie = m::mock(CookieInterface::class);
     }
 
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     #[Test]
     public function it_can_be_instantiated(): void
     {

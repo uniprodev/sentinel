@@ -59,9 +59,6 @@ class IlluminateReminderRepositoryTest extends TestCase
      */
     protected $reminders;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->users = m::mock(IlluminateUserRepository::class);
@@ -73,6 +70,16 @@ class IlluminateReminderRepositoryTest extends TestCase
 
         $this->reminders = m::mock('Cartalyst\Sentinel\Reminders\IlluminateReminderRepository[createModel]', [$this->users]);
         $this->reminders->shouldReceive('createModel')->andReturn($this->model);
+    }
+
+    protected function tearDown(): void
+    {
+        $this->users     = null;
+        $this->query     = null;
+        $this->model     = null;
+        $this->reminders = null;
+
+        m::close();
     }
 
     #[Test]

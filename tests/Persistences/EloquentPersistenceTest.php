@@ -40,6 +40,11 @@ class EloquentPersistenceTest extends TestCase
         $this->persistence = new EloquentPersistence;
     }
 
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     #[Test]
     public function it_can_get_the_user_relationship(): void
     {

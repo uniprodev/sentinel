@@ -53,9 +53,6 @@ class IlluminateActivationRepositoryTest extends TestCase
      */
     protected $query;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->query = m::mock(Builder::class);
@@ -65,6 +62,15 @@ class IlluminateActivationRepositoryTest extends TestCase
 
         $this->activations = m::mock('Cartalyst\Sentinel\Activations\IlluminateActivationRepository[createModel]', ['ActivationModelMock', 259200]);
         $this->activations->shouldReceive('createModel')->andReturn($this->model);
+    }
+
+    protected function tearDown(): void
+    {
+        $this->query       = null;
+        $this->model       = null;
+        $this->activations = null;
+
+        m::close();
     }
 
     #[Test]

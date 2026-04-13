@@ -28,6 +28,11 @@ use Cartalyst\Sentinel\Sessions\IlluminateSession;
 
 class IlluminateSessionTest extends TestCase
 {
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     #[Test]
     public function it_can_put_a_value_on_session(): void
     {

@@ -42,9 +42,6 @@ class IlluminateThrottleRepositoryTest extends TestCase
 
     protected $throttle;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->models = m::mock(Collection::class);
@@ -61,6 +58,11 @@ class IlluminateThrottleRepositoryTest extends TestCase
             [$this->users]
         );
         $this->throttle->shouldReceive('createModel')->andReturn($this->model);
+    }
+
+    protected function tearDown(): void
+    {
+        m::close();
     }
 
     #[Test]

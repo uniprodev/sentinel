@@ -24,17 +24,7 @@ use Illuminate\Session\Store as SessionStore;
 
 class IlluminateSession implements SessionInterface
 {
-    /**
-     * The session key.
-     *
-     * @var string
-     */
-    protected $key = 'cartalyst_sentinel';
-
-    public function __construct(protected SessionStore $session, ?string $key = null)
-    {
-        $this->key = $key;
-    }
+    public function __construct(protected SessionStore $session, protected ?string $key = 'cartalyst_sentinel') {}
 
     /**
      * {@inheritdoc}

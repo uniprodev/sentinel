@@ -42,14 +42,18 @@ class ActivationCheckpointTest extends TestCase
 
     protected ActivationCheckpoint $checkpoint;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->activations = m::mock(IlluminateActivationRepository::class);
         $this->user        = new EloquentUser;
         $this->checkpoint  = new ActivationCheckpoint($this->activations);
+    }
+
+    protected function tearDown(): void
+    {
+        $this->activations = null;
+
+        m::close();
     }
 
     #[Test]

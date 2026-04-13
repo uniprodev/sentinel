@@ -89,9 +89,6 @@ class SentinelTest extends TestCase
      */
     protected $user;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->user = m::mock(EloquentUser::class);
@@ -109,6 +106,18 @@ class SentinelTest extends TestCase
             $this->activations,
             $this->dispatcher
         );
+    }
+
+    protected function tearDown(): void
+    {
+        $this->user         = null;
+        $this->sentinel     = null;
+        $this->persistences = null;
+        $this->users        = null;
+        $this->roles        = null;
+        $this->activations  = null;
+        $this->dispatcher   = null;
+        m::close();
     }
 
     #[Test]

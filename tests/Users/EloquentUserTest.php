@@ -43,6 +43,11 @@ class EloquentUserTest extends TestCase
         $this->user = new EloquentUser;
     }
 
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     #[Test]
     public function it_can_get_the_user_permissions_from_the_accessor(): void
     {

@@ -43,14 +43,18 @@ class ThrottleCheckpointTest extends TestCase
      */
     protected $throttle;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->throttle   = m::mock(IlluminateThrottleRepository::class);
         $this->user       = new EloquentUser;
         $this->checkpoint = new ThrottleCheckpoint($this->throttle, '127.0.0.1');
+    }
+
+    protected function tearDown(): void
+    {
+        $this->throttle   = null;
+
+        m::close();
     }
 
     #[Test]

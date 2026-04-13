@@ -30,6 +30,11 @@ use Cartalyst\Sentinel\Cookies\IlluminateCookie;
 
 class IlluminateCookieTest extends TestCase
 {
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     #[Test]
     public function it_can_put_a_cookie(): void
     {

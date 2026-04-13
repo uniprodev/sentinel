@@ -41,6 +41,11 @@ class EloquentRoleTest extends TestCase
         $this->role = new EloquentRole;
     }
 
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     #[Test]
     public function it_can_set_and_get_the_users_model_fqcn(): void
     {

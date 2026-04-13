@@ -46,6 +46,11 @@ namespace Cartalyst\Sentinel\Tests\Cookies {
             self::$globalFunctions = m::mock();
         }
 
+        protected function tearDown(): void
+        {
+            m::close();
+        }
+
         #[Test]
         public function it_can_set_different_options_for_cookie(): void
         {
