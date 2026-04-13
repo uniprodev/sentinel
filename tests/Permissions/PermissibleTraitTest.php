@@ -20,8 +20,8 @@
 
 namespace Cartalyst\Sentinel\Tests\Permissions;
 
-use Mockery as m;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Cartalyst\Sentinel\Permissions\PermissibleTrait;
 use Cartalyst\Sentinel\Permissions\StandardPermissions;
 use Cartalyst\Sentinel\Permissions\PermissibleInterface;
@@ -29,44 +29,31 @@ use Cartalyst\Sentinel\Permissions\PermissionsInterface;
 
 class PermissibleTraitTest extends TestCase
 {
-    protected $permissible;
+    protected PermissibleStub $permissible;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->permissible = new PermissibleStub;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown(): void
-    {
-        $this->permissible = null;
-
-        m::close();
-    }
-
-    /** @test */
-    public function it_can_set_and_get_the_permissions_class()
+    #[Test]
+    public function it_can_set_and_get_the_permissions_class(): void
     {
         $this->permissible::setPermissionsClass(StandardPermissions::class);
 
         $this->assertSame(StandardPermissions::class, $this->permissible::getPermissionsClass());
     }
 
-    /** @test */
-    public function it_can_get_the_permissions_intance()
+    #[Test]
+    public function it_can_get_the_permissions_intance(): void
     {
         $this->permissible::setPermissionsClass(StandardPermissions::class);
 
         $this->assertInstanceOf(StandardPermissions::class, $this->permissible->getPermissionsInstance());
     }
 
-    /** @test */
-    public function it_can_add_permissions()
+    #[Test]
+    public function it_can_add_permissions(): void
     {
         $this->permissible->addPermission('test');
         $this->permissible->addPermission('test1');
@@ -79,8 +66,8 @@ class PermissibleTraitTest extends TestCase
         $this->assertSame($permissions, $this->permissible->getPermissions());
     }
 
-    /** @test */
-    public function it_can_update_permissions()
+    #[Test]
+    public function it_can_update_permissions(): void
     {
         $this->permissible->addPermission('test');
         $this->permissible->addPermission('test1');
@@ -94,8 +81,8 @@ class PermissibleTraitTest extends TestCase
         $this->assertSame($permissions, $this->permissible->getPermissions());
     }
 
-    /** @test */
-    public function it_can_create_or_update_permissions()
+    #[Test]
+    public function it_can_create_or_update_permissions(): void
     {
         $this->permissible->addPermission('test1');
         $this->permissible->updatePermission('test2', false);
@@ -119,8 +106,8 @@ class PermissibleTraitTest extends TestCase
         $this->assertSame($permissions, $this->permissible->getPermissions());
     }
 
-    /** @test */
-    public function it_can_remove_permissions()
+    #[Test]
+    public function it_can_remove_permissions(): void
     {
         $this->permissible->addPermission('test');
         $this->permissible->addPermission('test1');
@@ -133,8 +120,8 @@ class PermissibleTraitTest extends TestCase
         $this->assertSame($permissions, $this->permissible->getPermissions());
     }
 
-    /** @test */
-    public function it_can_use_the_setter_and_getter()
+    #[Test]
+    public function it_can_use_the_setter_and_getter(): void
     {
         $permissions = [
             'test' => true,

@@ -20,22 +20,14 @@
 
 namespace Cartalyst\Sentinel\Tests\Permissions;
 
-use Mockery as m;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Cartalyst\Sentinel\Permissions\StandardPermissions;
 
 class StandardPermissionsTest extends TestCase
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
-    /** @test */
-    public function permissions_can_inherit_from_secondary_permissions()
+    #[Test]
+    public function permissions_can_inherit_from_secondary_permissions(): void
     {
         $primaryPermissions = ['user.create' => true, 'user.update' => false, 'user.delete' => true];
 
@@ -57,8 +49,8 @@ class StandardPermissionsTest extends TestCase
         $this->assertTrue($permissions->hasAnyAccess(['user.update', 'user.delete']));
     }
 
-    /** @test */
-    public function permissions_with_wildcards_can_be_used()
+    #[Test]
+    public function permissions_with_wildcards_can_be_used(): void
     {
         $permissions = new StandardPermissions(['user.create' => true, 'user.update' => false]);
 
@@ -71,8 +63,8 @@ class StandardPermissionsTest extends TestCase
         $this->assertTrue($permissions->hasAccess('user.update'));
     }
 
-    /** @test */
-    public function permissions_as_class_names_can_be_used()
+    #[Test]
+    public function permissions_as_class_names_can_be_used(): void
     {
         $permissions = new StandardPermissions(['Class@method1,method2' => true]);
 

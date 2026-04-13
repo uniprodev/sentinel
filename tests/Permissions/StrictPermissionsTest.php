@@ -20,22 +20,14 @@
 
 namespace Cartalyst\Sentinel\Tests\Permissions;
 
-use Mockery as m;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Cartalyst\Sentinel\Permissions\StrictPermissions;
 
 class StrictPermissionsTest extends TestCase
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
-    /** @test */
-    public function permissions_can_inherit_from_secondary_permissions()
+    #[Test]
+    public function permissions_can_inherit_from_secondary_permissions(): void
     {
         $permissions = new StrictPermissions(
             ['foo' => true, 'bar' => false, 'fred' => true],
@@ -56,8 +48,8 @@ class StrictPermissionsTest extends TestCase
         $this->assertFalse($permissions->hasAnyAccess(['bar', 'fred']));
     }
 
-    /** @test */
-    public function permissions_with_wildcards_can_be_used()
+    #[Test]
+    public function permissions_with_wildcards_can_be_used(): void
     {
         $permissions = new StrictPermissions(['foo.bar' => true, 'foo.qux' => false]);
 
@@ -70,8 +62,8 @@ class StrictPermissionsTest extends TestCase
         $this->assertTrue($permissions->hasAccess('foo.qux'));
     }
 
-    /** @test */
-    public function permissions_as_class_names_can_be_used()
+    #[Test]
+    public function permissions_as_class_names_can_be_used(): void
     {
         $permissions = new StrictPermissions(['Class@method1,method2' => true]);
 

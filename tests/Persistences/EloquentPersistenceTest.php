@@ -23,6 +23,7 @@ namespace Cartalyst\Sentinel\Tests\Persistences;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
 use Illuminate\Database\Connection;
+use PHPUnit\Framework\Attributes\Test;
 use Cartalyst\Sentinel\Users\EloquentUser;
 use Illuminate\Database\Query\Grammars\Grammar;
 use Illuminate\Database\Query\Processors\Processor;
@@ -32,41 +33,23 @@ use Cartalyst\Sentinel\Persistences\EloquentPersistence;
 
 class EloquentPersistenceTest extends TestCase
 {
-    /**
-     * The Persistence instance.
-     *
-     * @var EloquentPersistence
-     */
-    protected $persistence;
+    protected EloquentPersistence $persistence;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->persistence = new EloquentPersistence;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown(): void
-    {
-        $this->persistence = null;
-
-        m::close();
-    }
-
-    /** @test */
-    public function it_can_get_the_user_relationship()
+    #[Test]
+    public function it_can_get_the_user_relationship(): void
     {
         $this->addMockConnection($this->persistence);
 
         $this->assertInstanceOf(BelongsTo::class, $this->persistence->user());
     }
 
-    /** @test */
-    public function it_can_set_and_get_the_user_model_class_name()
+    #[Test]
+    public function it_can_set_and_get_the_user_model_class_name(): void
     {
         $this->assertSame(EloquentUser::class, $this->persistence->getUsersModel());
 
@@ -75,7 +58,7 @@ class EloquentPersistenceTest extends TestCase
         $this->assertSame('FooClass', $this->persistence->getUsersModel());
     }
 
-    protected function addMockConnection($model)
+    protected function addMockConnection($model): void
     {
         $model->setConnectionResolver($resolver = m::mock(ConnectionResolverInterface::class));
         $resolver->shouldReceive('connection')->andReturn(m::mock(Connection::class)->makePartial());

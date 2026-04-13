@@ -23,6 +23,7 @@ namespace Cartalyst\Sentinel\Tests\Roles;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
 use Illuminate\Database\Connection;
+use PHPUnit\Framework\Attributes\Test;
 use Cartalyst\Sentinel\Roles\EloquentRole;
 use Cartalyst\Sentinel\Users\EloquentUser;
 use Illuminate\Database\Eloquent\Collection;
@@ -33,36 +34,23 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class EloquentRoleTest extends TestCase
 {
-    protected $role;
+    protected EloquentRole $role;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->role = new EloquentRole;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown(): void
-    {
-        $this->role = null;
-
-        m::close();
-    }
-
-    /** @test */
-    public function it_can_set_and_get_the_users_model_fqcn()
+    #[Test]
+    public function it_can_set_and_get_the_users_model_fqcn(): void
     {
         EloquentRole::setUsersModel(EloquentUser::class);
 
         $this->assertSame(EloquentUser::class, EloquentRole::getUsersModel());
     }
 
-    /** @test */
-    public function it_can_get_the_permissions_using_the_accessor()
+    #[Test]
+    public function it_can_get_the_permissions_using_the_accessor(): void
     {
         $this->role->slug = 'foo';
 
@@ -73,16 +61,16 @@ class EloquentRoleTest extends TestCase
         $this->assertSame($permissions, $this->role->permissions);
     }
 
-    /** @test */
-    public function it_can_get_the_users_for_the_role()
+    #[Test]
+    public function it_can_get_the_users_for_the_role(): void
     {
         $this->addMockConnection($this->role);
 
         $this->assertInstanceOf(Collection::class, $this->role->getUsers());
     }
 
-    /** @test */
-    public function it_can_pass_methods_to_the_permissions_instance()
+    #[Test]
+    public function it_can_pass_methods_to_the_permissions_instance(): void
     {
         $this->addMockConnection($this->role);
 
@@ -91,16 +79,16 @@ class EloquentRoleTest extends TestCase
         $this->assertFalse($this->role->hasAnyAccess($permissions));
     }
 
-    /** @test */
-    public function it_can_get_the_users_relationship()
+    #[Test]
+    public function it_can_get_the_users_relationship(): void
     {
         $this->addMockConnection($this->role);
 
         $this->assertInstanceOf(BelongsToMany::class, $this->role->users());
     }
 
-    /** @test */
-    public function it_can_delete_a_role()
+    #[Test]
+    public function it_can_delete_a_role(): void
     {
         $users = m::mock(BelongsToMany::class);
         $users->shouldReceive('detach')->once();
@@ -118,7 +106,7 @@ class EloquentRoleTest extends TestCase
         $this->assertTrue($role->delete());
     }
 
-    protected function addMockConnection($model)
+    protected function addMockConnection($model): void
     {
         $resolver = m::mock(ConnectionResolverInterface::class);
         $resolver->shouldReceive('connection')->andReturn(m::mock(Connection::class)->makePartial());

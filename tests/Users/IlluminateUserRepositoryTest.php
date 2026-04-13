@@ -23,6 +23,7 @@ namespace Cartalyst\Sentinel\Tests\Users;
 use Mockery as m;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Database\Eloquent\Builder;
 use Cartalyst\Sentinel\Users\EloquentUser;
 use Cartalyst\Sentinel\Hashing\NativeHasher;
@@ -56,21 +57,8 @@ class IlluminateUserRepositoryTest extends TestCase
         $this->users->shouldReceive('createModel')->andReturn($this->model);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown(): void
-    {
-        $this->hasher = null;
-        $this->query  = null;
-        $this->model  = null;
-        $this->users  = null;
-
-        m::close();
-    }
-
-    /** @test */
-    public function it_can_be_instantiated()
+    #[Test]
+    public function it_can_be_instantiated(): void
     {
         $users = m::mock('Cartalyst\Sentinel\Users\IlluminateUserRepository[createModel,findById]', [
             $this->hasher, null, 'UserMock',
@@ -79,8 +67,8 @@ class IlluminateUserRepositoryTest extends TestCase
         $this->assertSame('UserMock', $users->getModel());
     }
 
-    /** @test */
-    public function it_can_find_a_user_by_its_id()
+    #[Test]
+    public function it_can_find_a_user_by_its_id(): void
     {
         $this->query->shouldReceive('find')->with(1)->once()->andReturn($this->model);
 
@@ -89,8 +77,8 @@ class IlluminateUserRepositoryTest extends TestCase
         $this->assertInstanceOf(EloquentUser::class, $user);
     }
 
-    /** @test */
-    public function it_can_find_a_user_by_its_credentials_1()
+    #[Test]
+    public function it_can_find_a_user_by_its_credentials_1(): void
     {
         $this->model->shouldReceive('getLoginNames')->andReturn(['email']);
 
@@ -105,8 +93,8 @@ class IlluminateUserRepositoryTest extends TestCase
         $this->assertInstanceOf(EloquentUser::class, $user);
     }
 
-    /** @test */
-    public function it_can_find_a_user_by_its_credentials_2()
+    #[Test]
+    public function it_can_find_a_user_by_its_credentials_2(): void
     {
         $this->model->shouldReceive('getLoginNames')->andReturn(['email', 'username']);
 
@@ -126,8 +114,8 @@ class IlluminateUserRepositoryTest extends TestCase
         $this->assertInstanceOf(EloquentUser::class, $user);
     }
 
-    /** @test */
-    public function it_can_find_a_user_by_its_credentials_3()
+    #[Test]
+    public function it_can_find_a_user_by_its_credentials_3(): void
     {
         $this->model->shouldReceive('getLoginNames')->andReturn(['email']);
 
@@ -145,8 +133,8 @@ class IlluminateUserRepositoryTest extends TestCase
         $this->assertInstanceOf(EloquentUser::class, $user);
     }
 
-    /** @test */
-    public function it_cannot_find_a_user_by_invalid_credentials_1()
+    #[Test]
+    public function it_cannot_find_a_user_by_invalid_credentials_1(): void
     {
         $this->model->shouldReceive('getLoginNames')->andReturn(['email']);
 
@@ -157,8 +145,8 @@ class IlluminateUserRepositoryTest extends TestCase
         $this->assertNull($user);
     }
 
-    /** @test */
-    public function it_cannot_find_a_user_by_invalid_credentials_2()
+    #[Test]
+    public function it_cannot_find_a_user_by_invalid_credentials_2(): void
     {
         $this->model->shouldReceive('getLoginNames')->andReturn(['email']);
 
@@ -169,16 +157,16 @@ class IlluminateUserRepositoryTest extends TestCase
         $this->assertNull($user);
     }
 
-    /** @test */
-    public function it_cannot_find_a_user_by_invalid_credentials_3()
+    #[Test]
+    public function it_cannot_find_a_user_by_invalid_credentials_3(): void
     {
         $this->model->shouldReceive('getLoginNames')->andReturn(['email']);
 
         $this->assertNull($this->users->findByCredentials([]));
     }
 
-    /** @test */
-    public function it_can_find_a_user_by_its_persistence_code()
+    #[Test]
+    public function it_can_find_a_user_by_its_persistence_code(): void
     {
         $this->query->shouldReceive('whereHas')->with('persistences', m::on(function ($argument) {
             $this->query->shouldReceive('where')->with('code', 'foobar');
@@ -192,8 +180,8 @@ class IlluminateUserRepositoryTest extends TestCase
         $this->assertInstanceOf(EloquentUser::class, $user);
     }
 
-    /** @test */
-    public function it_can_record_the_login()
+    #[Test]
+    public function it_can_record_the_login(): void
     {
         $this->model->shouldReceive('setAttribute');
         $this->model->shouldReceive('save')->once()->andReturn(true);
@@ -201,16 +189,16 @@ class IlluminateUserRepositoryTest extends TestCase
         $this->assertTrue($this->users->recordLogin($this->model));
     }
 
-    /** @test */
-    public function it_can_record_the_logout()
+    #[Test]
+    public function it_can_record_the_logout(): void
     {
         $this->model->shouldReceive('save')->once()->andReturn(true);
 
         $this->assertTrue($this->users->recordLogout($this->model));
     }
 
-    /** @test */
-    public function it_can_validate_the_credentials()
+    #[Test]
+    public function it_can_validate_the_credentials(): void
     {
         $this->model->shouldReceive('getAttribute')->andReturn('secret');
 
@@ -224,8 +212,8 @@ class IlluminateUserRepositoryTest extends TestCase
         $this->assertTrue($valid);
     }
 
-    /** @test */
-    public function it_can_check_if_the_user_is_valid_for_being_created()
+    #[Test]
+    public function it_can_check_if_the_user_is_valid_for_being_created(): void
     {
         $this->model->shouldReceive('getLoginNames')->andReturn(['email']);
 
@@ -239,8 +227,8 @@ class IlluminateUserRepositoryTest extends TestCase
         $this->assertTrue($valid);
     }
 
-    /** @test */
-    public function it_can_check_if_the_user_is_valid_for_being_updated()
+    #[Test]
+    public function it_can_check_if_the_user_is_valid_for_being_updated(): void
     {
         $user = $this->fakeUser();
 
@@ -258,8 +246,8 @@ class IlluminateUserRepositoryTest extends TestCase
         $this->assertTrue($valid);
     }
 
-    /** @test */
-    public function it_can_create_a_user_using_login()
+    #[Test]
+    public function it_can_create_a_user_using_login(): void
     {
         $this->model->shouldReceive('getLoginNames')->andReturn(['email']);
         $this->model->shouldReceive('fill');
@@ -275,8 +263,8 @@ class IlluminateUserRepositoryTest extends TestCase
         $this->assertInstanceOf(EloquentUser::class, $user);
     }
 
-    /** @test */
-    public function it_can_create_a_user()
+    #[Test]
+    public function it_can_create_a_user(): void
     {
         $this->model->shouldReceive('getLoginNames')->andReturn(['email']);
         $this->model->shouldReceive('fill');
@@ -292,8 +280,8 @@ class IlluminateUserRepositoryTest extends TestCase
         $this->assertInstanceOf(EloquentUser::class, $user);
     }
 
-    /** @test */
-    public function it_can_create_a_user_with_valid_callback()
+    #[Test]
+    public function it_can_create_a_user_with_valid_callback(): void
     {
         $this->model->shouldReceive('getLoginNames')->andReturn(['email']);
         $this->model->shouldReceive('fill');
@@ -311,8 +299,8 @@ class IlluminateUserRepositoryTest extends TestCase
         $this->assertInstanceOf(EloquentUser::class, $user);
     }
 
-    /** @test */
-    public function it_will_not_create_a_user_with_an_invalid_callback()
+    #[Test]
+    public function it_will_not_create_a_user_with_an_invalid_callback(): void
     {
         $this->model->shouldReceive('getLoginNames')->andReturn(['email']);
         $this->model->shouldReceive('fill');
@@ -329,8 +317,8 @@ class IlluminateUserRepositoryTest extends TestCase
         $this->assertNull($user);
     }
 
-    /** @test */
-    public function it_can_update_a_user_by_instance()
+    #[Test]
+    public function it_can_update_a_user_by_instance(): void
     {
         $user = $this->fakeUser();
         $user->shouldReceive('getLoginNames')->andReturn(['email']);
@@ -344,8 +332,8 @@ class IlluminateUserRepositoryTest extends TestCase
         $this->assertInstanceOf(EloquentUser::class, $user);
     }
 
-    /** @test */
-    public function it_can_update_a_user_by_id()
+    #[Test]
+    public function it_can_update_a_user_by_id(): void
     {
         $user = $this->fakeUser();
         $user->shouldReceive('getLoginNames')->andReturn(['email']);
@@ -361,8 +349,8 @@ class IlluminateUserRepositoryTest extends TestCase
         $this->assertInstanceOf(EloquentUser::class, $user);
     }
 
-    /** @test */
-    public function it_can_set_and_get_the_hashing_strategy()
+    #[Test]
+    public function it_can_set_and_get_the_hashing_strategy(): void
     {
         $this->assertInstanceOf(NativeHasher::class, $this->users->getHasher());
 
@@ -371,8 +359,8 @@ class IlluminateUserRepositoryTest extends TestCase
         $this->assertInstanceOf(HasherInterface::class, $this->users->getHasher());
     }
 
-    /** @test */
-    public function an_exception_will_be_thrown_when_checking_if_the_user_is_valid_for_being_created_without_a_login()
+    #[Test]
+    public function an_exception_will_be_thrown_when_checking_if_the_user_is_valid_for_being_created_without_a_login(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('No [login] credential was passed.');
@@ -386,8 +374,8 @@ class IlluminateUserRepositoryTest extends TestCase
         $this->users->validForCreation($credentials);
     }
 
-    /** @test */
-    public function an_exception_will_be_thrown_when_checking_if_the_user_is_valid_for_being_created_without_a_password()
+    #[Test]
+    public function an_exception_will_be_thrown_when_checking_if_the_user_is_valid_for_being_created_without_a_password(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('You have not passed a [password].');
@@ -401,8 +389,8 @@ class IlluminateUserRepositoryTest extends TestCase
         $this->users->validForCreation($credentials);
     }
 
-    /** @test */
-    public function an_exception_will_be_thrown_when_checking_if_the_user_is_valid_for_being_created_with_an_empty_password()
+    #[Test]
+    public function an_exception_will_be_thrown_when_checking_if_the_user_is_valid_for_being_created_with_an_empty_password(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('You have not passed a [password].');

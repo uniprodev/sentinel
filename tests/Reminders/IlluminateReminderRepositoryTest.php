@@ -23,6 +23,7 @@ namespace Cartalyst\Sentinel\Tests\Reminders;
 use Mockery as m;
 use Carbon\Carbon;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Database\Eloquent\Builder;
 use Cartalyst\Sentinel\Reminders\EloquentReminder;
 use Cartalyst\Sentinel\Users\IlluminateUserRepository;
@@ -74,29 +75,16 @@ class IlluminateReminderRepositoryTest extends TestCase
         $this->reminders->shouldReceive('createModel')->andReturn($this->model);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown(): void
-    {
-        $this->users     = null;
-        $this->query     = null;
-        $this->model     = null;
-        $this->reminders = null;
-
-        m::close();
-    }
-
-    /** @test */
-    public function it_can_be_instantiated()
+    #[Test]
+    public function it_can_be_instantiated(): void
     {
         $reminders = new IlluminateReminderRepository($this->users, 'ReminderModelMock', 259200);
 
         $this->assertSame('ReminderModelMock', $reminders->getModel());
     }
 
-    /** @test */
-    public function it_can_create_a_reminder_code()
+    #[Test]
+    public function it_can_create_a_reminder_code(): void
     {
         $this->model->shouldReceive('fill');
         $this->model->shouldReceive('setAttribute');
@@ -109,8 +97,8 @@ class IlluminateReminderRepositoryTest extends TestCase
         $this->assertInstanceOf(EloquentReminder::class, $reminder);
     }
 
-    /** @test */
-    public function it_can_determine_if_a_reminder_exists()
+    #[Test]
+    public function it_can_determine_if_a_reminder_exists(): void
     {
         $this->query->shouldReceive('where')->with('user_id', '1')->andReturnSelf();
         $this->query->shouldReceive('where')->with('completed', false)->andReturnSelf();
@@ -124,8 +112,8 @@ class IlluminateReminderRepositoryTest extends TestCase
         $this->assertFalse($status);
     }
 
-    /** @test */
-    public function it_can_determine_if_a_reminder_exists_with_a_code()
+    #[Test]
+    public function it_can_determine_if_a_reminder_exists_with_a_code(): void
     {
         $this->query->shouldReceive('where')->with('user_id', '1')->andReturnSelf();
         $this->query->shouldReceive('where')->with('completed', false)->andReturnSelf();
@@ -140,8 +128,8 @@ class IlluminateReminderRepositoryTest extends TestCase
         $this->assertFalse($status);
     }
 
-    /** @test */
-    public function it_can_complete_a_reminder()
+    #[Test]
+    public function it_can_complete_a_reminder(): void
     {
         $user = $this->getUserMock();
 
@@ -162,8 +150,8 @@ class IlluminateReminderRepositoryTest extends TestCase
         $this->assertTrue($status);
     }
 
-    /** @test */
-    public function it_cannot_complete_a_reminder_that_does_not_exist()
+    #[Test]
+    public function it_cannot_complete_a_reminder_that_does_not_exist(): void
     {
         $this->query->shouldReceive('where')->with('user_id', '1')->andReturnSelf();
         $this->query->shouldReceive('where')->with('code', 'foobar')->andReturnSelf();
@@ -178,8 +166,8 @@ class IlluminateReminderRepositoryTest extends TestCase
         $this->assertFalse($status);
     }
 
-    /** @test */
-    public function it_cannot_complete_a_reminder_that_has_expired()
+    #[Test]
+    public function it_cannot_complete_a_reminder_that_has_expired(): void
     {
         $this->users->shouldReceive('validForUpdate')->once()->andReturn(false);
 
@@ -196,8 +184,8 @@ class IlluminateReminderRepositoryTest extends TestCase
         $this->assertFalse($status);
     }
 
-    /** @test */
-    public function it_can_remove_expired_reminders()
+    #[Test]
+    public function it_can_remove_expired_reminders(): void
     {
         $this->query->shouldReceive('where')->with('completed', false)->andReturnSelf();
         $this->query->shouldReceive('where')->with('created_at', '<', m::type(Carbon::class))->andReturnSelf();

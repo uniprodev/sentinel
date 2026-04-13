@@ -21,11 +21,11 @@
 namespace Cartalyst\Sentinel\Tests;
 
 use Mockery as m;
-use RuntimeException;
 use BadMethodCallException;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Cartalyst\Sentinel\Sentinel;
+use PHPUnit\Framework\Attributes\Test;
 use Cartalyst\Sentinel\Roles\EloquentRole;
 use Cartalyst\Sentinel\Users\EloquentUser;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -111,23 +111,8 @@ class SentinelTest extends TestCase
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown(): void
-    {
-        $this->user         = null;
-        $this->sentinel     = null;
-        $this->persistences = null;
-        $this->users        = null;
-        $this->roles        = null;
-        $this->activations  = null;
-        $this->dispatcher   = null;
-        m::close();
-    }
-
-    /** @test */
-    public function it_can_register_a_valid_user()
+    #[Test]
+    public function it_can_register_a_valid_user(): void
     {
         $this->users->shouldReceive('validForCreation')->once()->andReturn(true);
         $this->users->shouldReceive('create')->once()->andReturn($this->user);
@@ -148,8 +133,8 @@ class SentinelTest extends TestCase
         $this->assertSame($result, $this->user);
     }
 
-    /** @test */
-    public function it_can_register_and_activate_a_valid_user()
+    #[Test]
+    public function it_can_register_and_activate_a_valid_user(): void
     {
         $this->users->shouldReceive('validForCreation')->once()->andReturn(true);
         $this->users->shouldReceive('create')->once()->andReturn($this->user);
@@ -170,8 +155,8 @@ class SentinelTest extends TestCase
         $this->assertSame($result, $this->user);
     }
 
-    /** @test */
-    public function it_will_not_register_an_invalid_user()
+    #[Test]
+    public function it_will_not_register_an_invalid_user(): void
     {
         $this->users->shouldReceive('validForCreation')->once()->andReturn(false);
 
@@ -184,8 +169,8 @@ class SentinelTest extends TestCase
         $this->assertFalse($result);
     }
 
-    /** @test */
-    public function it_can_activate_a_user_using_its_id()
+    #[Test]
+    public function it_can_activate_a_user_using_its_id(): void
     {
         $activation = m::mock(ActivationInterface::class);
         $activation->shouldReceive('getCode')->once()->andReturn('a_random_code');
@@ -200,8 +185,8 @@ class SentinelTest extends TestCase
         $this->assertTrue($this->sentinel->activate('1'));
     }
 
-    /** @test */
-    public function it_can_activate_a_user_using_its_instance()
+    #[Test]
+    public function it_can_activate_a_user_using_its_instance(): void
     {
         $activation = m::mock(ActivationInterface::class);
         $activation->shouldReceive('getCode')->once()->andReturn('a_random_code');
@@ -214,8 +199,8 @@ class SentinelTest extends TestCase
         $this->assertTrue($this->sentinel->activate($this->user));
     }
 
-    /** @test */
-    public function it_can_activate_a_user_using_its_credentials()
+    #[Test]
+    public function it_can_activate_a_user_using_its_credentials(): void
     {
         $credentials = [
             'login'    => 'foo@example.com',
@@ -235,8 +220,8 @@ class SentinelTest extends TestCase
         $this->assertTrue($this->sentinel->activate($credentials));
     }
 
-    /** @test */
-    public function it_can_check_if_the_user_is_logged_in()
+    #[Test]
+    public function it_can_check_if_the_user_is_logged_in(): void
     {
         $this->persistences->shouldReceive('check')->once()->andReturn('foobar');
         $this->persistences->shouldReceive('findUserByPersistenceCode')->with('foobar')->andReturn($this->user);
@@ -244,8 +229,8 @@ class SentinelTest extends TestCase
         $this->assertSame($this->user, $this->sentinel->check());
     }
 
-    /** @test */
-    public function it_can_check_if_the_user_is_logged_in_when_it_is_not()
+    #[Test]
+    public function it_can_check_if_the_user_is_logged_in_when_it_is_not(): void
     {
         $this->persistences->shouldReceive('check')->once()->andReturn('foobar');
         $this->persistences->shouldReceive('findUserByPersistenceCode')->with('foobar')->andReturn(null);
@@ -253,8 +238,8 @@ class SentinelTest extends TestCase
         $this->assertFalse($this->sentinel->check());
     }
 
-    /** @test */
-    public function it_can_force_the_check_if_the_user_is_logged_in()
+    #[Test]
+    public function it_can_force_the_check_if_the_user_is_logged_in(): void
     {
         $this->persistences->shouldReceive('check')->once();
         $this->persistences->shouldReceive('findUserByPersistenceCode')->with('foobar')->andReturn($this->user);
@@ -268,22 +253,22 @@ class SentinelTest extends TestCase
         $this->assertFalse($valid);
     }
 
-    public function test_guest1()
+    public function test_guest1(): void
     {
         $this->persistences->shouldReceive('check')->once();
 
         $this->assertTrue($this->sentinel->guest());
     }
 
-    public function test_guest2()
+    public function test_guest2(): void
     {
         $this->sentinel->setUser($this->user);
 
         $this->assertFalse($this->sentinel->guest());
     }
 
-    /** @test */
-    public function it_can_authenticate_a_user_using_its_credentials()
+    #[Test]
+    public function it_can_authenticate_a_user_using_its_credentials(): void
     {
         $credentials = [
             'login'    => 'foo@example.com',
@@ -311,8 +296,8 @@ class SentinelTest extends TestCase
         $this->assertSame($this->user, $this->sentinel->authenticate($credentials));
     }
 
-    /** @test */
-    public function it_can_authenticate_a_user_using_its_user_instance()
+    #[Test]
+    public function it_can_authenticate_a_user_using_its_user_instance(): void
     {
         $this->persistences->shouldReceive('persist')->once();
 
@@ -333,8 +318,8 @@ class SentinelTest extends TestCase
         $this->assertSame($this->user, $this->sentinel->authenticate($this->user));
     }
 
-    /** @test */
-    public function it_will_not_authenticate_a_user_with_invalid_credentials()
+    #[Test]
+    public function it_will_not_authenticate_a_user_with_invalid_credentials(): void
     {
         $this->users->shouldReceive('findByCredentials')->once();
 
@@ -343,8 +328,8 @@ class SentinelTest extends TestCase
         $this->assertFalse($this->sentinel->authenticate([]));
     }
 
-    /** @test */
-    public function it_can_authenticate_and_remember()
+    #[Test]
+    public function it_can_authenticate_and_remember(): void
     {
         $credentials = [
             'login'    => 'foo@example.com',
@@ -363,8 +348,8 @@ class SentinelTest extends TestCase
         $this->assertSame($this->user, $this->sentinel->authenticateAndRemember($credentials));
     }
 
-    /** @test */
-    public function it_can_authenticate_when_checkpoints_are_disabled()
+    #[Test]
+    public function it_can_authenticate_when_checkpoints_are_disabled(): void
     {
         $this->sentinel->disableCheckpoints();
 
@@ -377,8 +362,8 @@ class SentinelTest extends TestCase
         $this->assertSame($this->user, $this->sentinel->authenticate($this->user));
     }
 
-    /** @test */
-    public function it_cannot_authenticate_when_firing_an_event_fails()
+    #[Test]
+    public function it_cannot_authenticate_when_firing_an_event_fails(): void
     {
         $credentials = [
             'login'    => 'foo@example.com',
@@ -390,8 +375,8 @@ class SentinelTest extends TestCase
         $this->assertFalse($this->sentinel->authenticate($credentials));
     }
 
-    /** @test */
-    public function it_cannot_authenticate_when_a_checkpoint_fails()
+    #[Test]
+    public function it_cannot_authenticate_when_a_checkpoint_fails(): void
     {
         $checkpoint = m::mock(CheckpointInterface::class);
         $checkpoint->shouldReceive('login')->andReturn(false);
@@ -403,8 +388,8 @@ class SentinelTest extends TestCase
         $this->assertFalse($this->sentinel->authenticate($this->user));
     }
 
-    /** @test */
-    public function it_cannot_authenticate_when_a_login_fails()
+    #[Test]
+    public function it_cannot_authenticate_when_a_login_fails(): void
     {
         $this->persistences->shouldReceive('persist')->once();
 
@@ -416,16 +401,16 @@ class SentinelTest extends TestCase
         $this->assertFalse($this->sentinel->authenticate($this->user));
     }
 
-    /** @test */
-    public function it_can_set_the_user_instance_on_the_sentinel_class()
+    #[Test]
+    public function it_can_set_the_user_instance_on_the_sentinel_class(): void
     {
         $this->sentinel->setUser($this->user);
 
         $this->assertSame($this->user, $this->sentinel->getUser());
     }
 
-    /** @test */
-    public function it_can_bypass_all_checkpoints()
+    #[Test]
+    public function it_can_bypass_all_checkpoints(): void
     {
         $this->persistences->shouldReceive('check')->once()->andReturn('foobar');
         $this->persistences->shouldReceive('findUserByPersistenceCode')->with('foobar')->andReturn($this->user);
@@ -441,8 +426,8 @@ class SentinelTest extends TestCase
         });
     }
 
-    /** @test */
-    public function it_can_bypass_a_specific_endpoint()
+    #[Test]
+    public function it_can_bypass_a_specific_endpoint(): void
     {
         $this->persistences->shouldReceive('check')->once()->andReturn('foobar');
         $this->persistences->shouldReceive('findUserByPersistenceCode')->with('foobar')->andReturn($this->user);
@@ -460,8 +445,8 @@ class SentinelTest extends TestCase
         }, ['activation']);
     }
 
-    /** @test */
-    public function it_can_get_the_checkpoint_status()
+    #[Test]
+    public function it_can_get_the_checkpoint_status(): void
     {
         $this->sentinel->disableCheckpoints();
 
@@ -472,8 +457,8 @@ class SentinelTest extends TestCase
         $this->assertTrue($this->sentinel->checkpointsStatus());
     }
 
-    /** @test */
-    public function it_can_disable_all_checkpoints()
+    #[Test]
+    public function it_can_disable_all_checkpoints(): void
     {
         $this->assertTrue($this->sentinel->checkpointsStatus());
 
@@ -493,8 +478,8 @@ class SentinelTest extends TestCase
         $this->assertNotNull($this->sentinel->check());
     }
 
-    /** @test */
-    public function it_can_enable_all_checkpoints()
+    #[Test]
+    public function it_can_enable_all_checkpoints(): void
     {
         $this->persistences->shouldReceive('check')->once()->andReturn('foobar');
         $this->persistences->shouldReceive('findUserByPersistenceCode')->with('foobar')->andReturn($this->user);
@@ -520,8 +505,8 @@ class SentinelTest extends TestCase
         $this->assertNotNull($this->sentinel->check());
     }
 
-    /** @test */
-    public function it_can_add_checkpoint_at_runtime()
+    #[Test]
+    public function it_can_add_checkpoint_at_runtime(): void
     {
         $activationCheckpoint = m::mock(CheckpointInterface::class);
 
@@ -531,8 +516,8 @@ class SentinelTest extends TestCase
         $this->assertArrayHasKey('activation', $this->sentinel->getCheckpoints());
     }
 
-    /** @test */
-    public function it_can_remove_checkpoint_at_runtime()
+    #[Test]
+    public function it_can_remove_checkpoint_at_runtime(): void
     {
         $activationCheckpoint = m::mock(CheckpointInterface::class);
         $throttleCheckpoint   = m::mock(CheckpointInterface::class);
@@ -546,8 +531,8 @@ class SentinelTest extends TestCase
         $this->assertArrayNotHasKey('activation', $this->sentinel->getCheckpoints());
     }
 
-    /** @test */
-    public function it_can_remove_checkpoints_at_runtime()
+    #[Test]
+    public function it_can_remove_checkpoints_at_runtime(): void
     {
         $activationCheckpoint = m::mock(CheckpointInterface::class);
         $throttleCheckpoint   = m::mock(CheckpointInterface::class);
@@ -563,8 +548,8 @@ class SentinelTest extends TestCase
         $this->assertCount(0, $this->sentinel->getCheckpoints());
     }
 
-    /** @test */
-    public function the_check_checkpoint_will_be_invoked()
+    #[Test]
+    public function the_check_checkpoint_will_be_invoked(): void
     {
         $this->persistences->shouldReceive('check')->once()->andReturn('foobar');
         $this->persistences->shouldReceive('findUserByPersistenceCode')->with('foobar')->andReturn($this->user);
@@ -577,8 +562,8 @@ class SentinelTest extends TestCase
         $this->assertFalse($this->sentinel->check());
     }
 
-    /** @test */
-    public function the_login_checkpoint_will_be_invoked()
+    #[Test]
+    public function the_login_checkpoint_will_be_invoked(): void
     {
         $this->dispatcher->shouldReceive('until')->once();
 
@@ -590,8 +575,8 @@ class SentinelTest extends TestCase
         $this->assertFalse($this->sentinel->authenticate($this->user));
     }
 
-    /** @test */
-    public function the_fail_checkpoint_will_be_invoked()
+    #[Test]
+    public function the_fail_checkpoint_will_be_invoked(): void
     {
         $credentials = [
             'login'    => 'foo@example.com',
@@ -610,8 +595,8 @@ class SentinelTest extends TestCase
         $this->assertFalse($this->sentinel->authenticate($credentials));
     }
 
-    /** @test */
-    public function it_can_login_with_a_valid_user()
+    #[Test]
+    public function it_can_login_with_a_valid_user(): void
     {
         $this->persistences->shouldReceive('persist')->once();
 
@@ -622,8 +607,8 @@ class SentinelTest extends TestCase
         $this->assertSame($this->user, $this->sentinel->login($this->user));
     }
 
-    /** @test */
-    public function it_will_not_login_with_an_invalid_user()
+    #[Test]
+    public function it_will_not_login_with_an_invalid_user(): void
     {
         $this->persistences->shouldReceive('persist')->once();
 
@@ -634,7 +619,7 @@ class SentinelTest extends TestCase
         $this->assertFalse($this->sentinel->login($this->user));
     }
 
-    public function it_will_ensure_the_user_is_not_defined_when_logging_out()
+    public function it_will_ensure_the_user_is_not_defined_when_logging_out(): void
     {
         $this->persistences->shouldReceive('persist')->once();
         $this->persistences->shouldReceive('forget')->once();
@@ -648,8 +633,8 @@ class SentinelTest extends TestCase
         $this->assertNull($this->sentinel->getUser(false));
     }
 
-    /** @test */
-    public function it_can_logout_the_current_user()
+    #[Test]
+    public function it_can_logout_the_current_user(): void
     {
         $this->persistences->shouldReceive('check')->once()->andReturn('foobar');
         $this->persistences->shouldReceive('findUserByPersistenceCode')->with('foobar')->once()->andReturn($this->user);
@@ -662,8 +647,8 @@ class SentinelTest extends TestCase
         $this->assertTrue($this->sentinel->logout($this->user));
     }
 
-    /** @test */
-    public function it_can_logout_the_user_on_the_other_devices()
+    #[Test]
+    public function it_can_logout_the_user_on_the_other_devices(): void
     {
         $this->persistences->shouldReceive('check')->once()->andReturn('foobar');
         $this->persistences->shouldReceive('findUserByPersistenceCode')->with('foobar')->once()->andReturn($this->user);
@@ -676,8 +661,8 @@ class SentinelTest extends TestCase
         $this->assertTrue($this->sentinel->logout($this->user, true));
     }
 
-    /** @test */
-    public function it_can_maintain_a_user_session_after_logging_out_another_user()
+    #[Test]
+    public function it_can_maintain_a_user_session_after_logging_out_another_user(): void
     {
         $currentUser = m::mock(EloquentUser::class);
 
@@ -695,8 +680,8 @@ class SentinelTest extends TestCase
         $this->assertSame($currentUser, $this->sentinel->getUser(false));
     }
 
-    /** @test */
-    public function it_can_logout_an_invalid_user()
+    #[Test]
+    public function it_can_logout_an_invalid_user(): void
     {
         $user = null;
 
@@ -707,8 +692,8 @@ class SentinelTest extends TestCase
         $this->assertTrue($this->sentinel->logout($user, true));
     }
 
-    /** @test */
-    public function it_can_create_a_basic_response()
+    #[Test]
+    public function it_can_create_a_basic_response(): void
     {
         $response = json_encode(['response']);
 
@@ -719,8 +704,8 @@ class SentinelTest extends TestCase
         $this->assertSame($response, $this->sentinel->getBasicResponse());
     }
 
-    /** @test */
-    public function it_can_set_and_get_the_various_repositories()
+    #[Test]
+    public function it_can_set_and_get_the_various_repositories(): void
     {
         $this->sentinel->setPersistenceRepository($persistence = m::mock(PersistenceRepositoryInterface::class));
         $this->sentinel->setUserRepository($users = m::mock(UserRepositoryInterface::class));
@@ -737,8 +722,8 @@ class SentinelTest extends TestCase
         $this->assertSame($throttling, $this->sentinel->getThrottleRepository());
     }
 
-    /** @test */
-    public function it_can_pass_method_calls_to_a_user_repository_directly()
+    #[Test]
+    public function it_can_pass_method_calls_to_a_user_repository_directly(): void
     {
         $this->users->shouldReceive('findById')->once()->andReturn(m::mock(EloquentUser::class));
 
@@ -747,8 +732,8 @@ class SentinelTest extends TestCase
         $this->assertInstanceOf(EloquentUser::class, $user);
     }
 
-    /** @test */
-    public function it_can_pass_method_calls_to_a_user_repository_via_find_user_by()
+    #[Test]
+    public function it_can_pass_method_calls_to_a_user_repository_via_find_user_by(): void
     {
         $this->users->shouldReceive('findById')->once()->andReturn(m::mock(EloquentUser::class));
 
@@ -757,8 +742,8 @@ class SentinelTest extends TestCase
         $this->assertInstanceOf(EloquentUser::class, $user);
     }
 
-    /** @test */
-    public function it_can_pass_method_calls_to_a_role_repository_via_find_role_by()
+    #[Test]
+    public function it_can_pass_method_calls_to_a_role_repository_via_find_role_by(): void
     {
         $this->roles->shouldReceive('findById')->once()->andReturn(m::mock(EloquentRole::class));
 
@@ -767,8 +752,8 @@ class SentinelTest extends TestCase
         $this->assertInstanceOf(EloquentRole::class, $user);
     }
 
-    /** @test */
-    public function it_can_pass_methods_via_the_user_repository_when_a_user_is_logged_in()
+    #[Test]
+    public function it_can_pass_methods_via_the_user_repository_when_a_user_is_logged_in(): void
     {
         $this->user->shouldReceive('hasAccess')->andReturn(true);
 
@@ -778,8 +763,8 @@ class SentinelTest extends TestCase
         $this->assertTrue($this->sentinel->hasAccess());
     }
 
-    /** @test */
-    public function an_exception_will_be_thrown_when_activating_an_invalid_user()
+    #[Test]
+    public function an_exception_will_be_thrown_when_activating_an_invalid_user(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('No valid user was provided.');
@@ -787,8 +772,8 @@ class SentinelTest extends TestCase
         $this->sentinel->activate(20.00);
     }
 
-    /** @test */
-    public function an_exception_will_be_thrown_when_registering_with_an_invalid_closure()
+    #[Test]
+    public function an_exception_will_be_thrown_when_registering_with_an_invalid_closure(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('You must provide a closure or a boolean.');
@@ -798,7 +783,7 @@ class SentinelTest extends TestCase
         ], 'invalid_closure');
     }
 
-    // /** @test */
+    // #[Test]
     // public function an_exception_will_be_thrown_when_trying_to_get_the_basic_response()
     // {
     //     $this->expectException(RuntimeException::class);
@@ -807,8 +792,8 @@ class SentinelTest extends TestCase
     //     $this->sentinel->getBasicResponse();
     // }
 
-    /** @test */
-    public function an_exception_will_be_thrown_when_calling_methods_which_are_only_available_when_a_user_is_logged_in()
+    #[Test]
+    public function an_exception_will_be_thrown_when_calling_methods_which_are_only_available_when_a_user_is_logged_in(): void
     {
         $this->expectException(BadMethodCallException::class);
         $this->expectExceptionMessage('Method Cartalyst\Sentinel\Sentinel::getRoles() can only be called if a user is logged in.');
@@ -818,8 +803,8 @@ class SentinelTest extends TestCase
         $this->sentinel->getRoles();
     }
 
-    /** @test */
-    public function an_exception_will_be_thrown_when_calling_invalid_methods()
+    #[Test]
+    public function an_exception_will_be_thrown_when_calling_invalid_methods(): void
     {
         $this->expectException(BadMethodCallException::class);
         $this->expectExceptionMessage('Call to undefined method Cartalyst\Sentinel\Sentinel::methodThatDoesntExist()');

@@ -20,23 +20,15 @@
 
 namespace Cartalyst\Sentinel\Tests\Permissions;
 
-use Mockery as m;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Cartalyst\Sentinel\Permissions\PermissionsTrait;
 use Cartalyst\Sentinel\Permissions\PermissionsInterface;
 
 class PermissionsTraitTest extends TestCase
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
-    /** @test */
-    public function it_can_set_the_secondary_permissions_at_runtime()
+    #[Test]
+    public function it_can_set_the_secondary_permissions_at_runtime(): void
     {
         $secondaryPermissions = [
             [
@@ -70,8 +62,8 @@ class PermissionsTraitTest extends TestCase
         $this->assertSame($secondaryPermissions, $permissions->getSecondaryPermissions());
     }
 
-    /** @test */
-    public function permissions_with_wildcards_can_be_used()
+    #[Test]
+    public function permissions_with_wildcards_can_be_used(): void
     {
         $permissions = new PermissionsStub([
             'user.add'    => true,
@@ -81,8 +73,8 @@ class PermissionsTraitTest extends TestCase
         $this->assertTrue($permissions->hasAccess('user.*'));
     }
 
-    /** @test */
-    public function personal_permissions_take_priority_over_pattern_match()
+    #[Test]
+    public function personal_permissions_take_priority_over_pattern_match(): void
     {
         $permissions = new PermissionsStub([
             'user.*'      => true,
@@ -94,8 +86,8 @@ class PermissionsTraitTest extends TestCase
         $this->assertFalse($permissions->hasAccess('user.delete'));
     }
 
-    /** @test */
-    public function permissions_as_class_names_can_be_used()
+    #[Test]
+    public function permissions_as_class_names_can_be_used(): void
     {
         $permissions = new PermissionsStub([
             'Foo\Bar\Baz@add,view'      => true,

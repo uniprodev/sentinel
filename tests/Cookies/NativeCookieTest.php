@@ -18,8 +18,8 @@
  * @link       https://cartalyst.com
  */
 
-namespace Cartalyst\Sentinel\Cookies
-{
+namespace Cartalyst\Sentinel\Cookies {
+
     use Cartalyst\Sentinel\Tests\Cookies\NativeCookieTest;
 
     function setcookie($name, $value, $expires, $path, $domain, $secure, $httponly)
@@ -30,10 +30,11 @@ namespace Cartalyst\Sentinel\Cookies
     }
 }
 
-namespace Cartalyst\Sentinel\Tests\Cookies
-{
+namespace Cartalyst\Sentinel\Tests\Cookies {
+
     use Mockery as m;
     use PHPUnit\Framework\TestCase;
+    use PHPUnit\Framework\Attributes\Test;
     use Cartalyst\Sentinel\Cookies\NativeCookie;
 
     class NativeCookieTest extends TestCase
@@ -45,13 +46,8 @@ namespace Cartalyst\Sentinel\Tests\Cookies
             self::$globalFunctions = m::mock();
         }
 
-        protected function tearDown(): void
-        {
-            m::close();
-        }
-
-        /** @test */
-        public function it_can_set_different_options_for_cookie()
+        #[Test]
+        public function it_can_set_different_options_for_cookie(): void
         {
             $cookie = new NativeCookie([
                 'name'      => 'foo',
@@ -74,8 +70,8 @@ namespace Cartalyst\Sentinel\Tests\Cookies
             $this->assertNull($cookie->put('mockCookie'));
         }
 
-        /** @test */
-        public function it_can_set_a_cookie()
+        #[Test]
+        public function it_can_set_a_cookie(): void
         {
             $cookie = new NativeCookie('__sentinel');
 
@@ -92,8 +88,8 @@ namespace Cartalyst\Sentinel\Tests\Cookies
             $this->assertNull($cookie->put('mockCookie'));
         }
 
-        /** @test */
-        public function it_can_get_a_cookie()
+        #[Test]
+        public function it_can_get_a_cookie(): void
         {
             $cookie = new NativeCookie('__sentinel');
 
@@ -104,8 +100,8 @@ namespace Cartalyst\Sentinel\Tests\Cookies
             $this->assertSame('bar', $cookie->get());
         }
 
-        /** @test */
-        public function it_can_forget_a_cookie()
+        #[Test]
+        public function it_can_forget_a_cookie(): void
         {
             $cookie = new NativeCookie('__sentinel');
 

@@ -23,6 +23,7 @@ namespace Cartalyst\Sentinel\Tests\Persistences;
 use Mockery as m;
 use ArrayIterator;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Cartalyst\Sentinel\Users\UserInterface;
@@ -47,24 +48,16 @@ class IlluminatePersistenceRepositoryTest extends TestCase
         $this->cookie = m::mock(CookieInterface::class);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
-    /** @test */
-    public function it_can_be_instantiated()
+    #[Test]
+    public function it_can_be_instantiated(): void
     {
         $persistence = new IlluminatePersistenceRepository($this->session, $this->cookie, 'PersistenceMock');
 
         $this->assertSame('PersistenceMock', $persistence->getModel());
     }
 
-    /** @test */
-    public function it_can_check_without_session_or_cookie()
+    #[Test]
+    public function it_can_check_without_session_or_cookie(): void
     {
         $persistence = new IlluminatePersistenceRepository($this->session, $this->cookie);
 
@@ -74,8 +67,8 @@ class IlluminatePersistenceRepositoryTest extends TestCase
         $this->assertNull($persistence->check());
     }
 
-    /** @test */
-    public function it_can_check_with_session()
+    #[Test]
+    public function it_can_check_with_session(): void
     {
         $persistence = new IlluminatePersistenceRepository($this->session, $this->cookie);
 
@@ -84,8 +77,8 @@ class IlluminatePersistenceRepositoryTest extends TestCase
         $this->assertSame('foo', $persistence->check());
     }
 
-    /** @test */
-    public function it_can_check_with_cookie()
+    #[Test]
+    public function it_can_check_with_cookie(): void
     {
         $persistence = new IlluminatePersistenceRepository($this->session, $this->cookie);
 
@@ -95,8 +88,8 @@ class IlluminatePersistenceRepositoryTest extends TestCase
         $this->assertSame('bar', $persistence->check());
     }
 
-    /** @test */
-    public function it_can_find_by_a_persistence_code()
+    #[Test]
+    public function it_can_find_by_a_persistence_code(): void
     {
         $persistence = m::mock(PersistenceInterface::class);
 
@@ -113,8 +106,8 @@ class IlluminatePersistenceRepositoryTest extends TestCase
         $this->assertInstanceOf(PersistenceInterface::class, $persistenceRepository->findByPersistenceCode('foobar'));
     }
 
-    /** @test */
-    public function it_can_find_a_user_from_a_persistence_code()
+    #[Test]
+    public function it_can_find_a_user_from_a_persistence_code(): void
     {
         $user = m::mock(UserInterface::class);
 
@@ -136,8 +129,8 @@ class IlluminatePersistenceRepositoryTest extends TestCase
         $this->assertInstanceOf(UserInterface::class, $user);
     }
 
-    /** @test */
-    public function it_will_not_find_a_user_from_an_invalid_persistence_code()
+    #[Test]
+    public function it_will_not_find_a_user_from_an_invalid_persistence_code(): void
     {
         $query = m::mock(Builder::class);
         $query->shouldReceive('where')->with('code', 'foobar')->andReturn($query);
@@ -154,8 +147,8 @@ class IlluminatePersistenceRepositoryTest extends TestCase
         $this->assertNull($user);
     }
 
-    /** @test */
-    public function it_can_persist_a_persistence()
+    #[Test]
+    public function it_can_persist_a_persistence(): void
     {
         $this->session->shouldReceive('get')->once();
         $this->session->shouldReceive('put')->with('code')->once();
@@ -178,14 +171,15 @@ class IlluminatePersistenceRepositoryTest extends TestCase
         $persistable->shouldReceive('getPersistableKey')->once()->andReturn('foo');
         $persistable->shouldReceive('getPersistableId')->once()->andReturn(1);
 
-        $persistenceRepository = m::mock('Cartalyst\Sentinel\Persistences\IlluminatePersistenceRepository[createModel]', [$this->session, $this->cookie, null, true]);
+        $persistenceRepository = m::mock('Cartalyst\Sentinel\Persistences\IlluminatePersistenceRepository[createModel]',
+            [$this->session, $this->cookie, null, true]);
         $persistenceRepository->shouldReceive('createModel')->once()->andReturn($model);
 
         $this->assertTrue($persistenceRepository->persist($persistable));
     }
 
-    /** @test */
-    public function it_can_persist_and_remember_a_persistence()
+    #[Test]
+    public function it_can_persist_and_remember_a_persistence(): void
     {
         $this->session->shouldReceive('put')->with('code')->once();
         $this->cookie->shouldReceive('put')->with('code')->once();
@@ -206,8 +200,8 @@ class IlluminatePersistenceRepositoryTest extends TestCase
         $this->assertTrue($persistence->persistAndRemember($persistable));
     }
 
-    /** @test */
-    public function it_can_remove_a_persistence()
+    #[Test]
+    public function it_can_remove_a_persistence(): void
     {
         $persistence = m::mock('Cartalyst\Sentinel\Persistences\IlluminatePersistenceRepository[createModel]', [$this->session, $this->cookie]);
         $persistence->shouldReceive('createModel')->andReturn($model = m::mock('Cartalyst\Sentinel\Persistences\EloquentPersistence'));
@@ -221,8 +215,8 @@ class IlluminatePersistenceRepositoryTest extends TestCase
         $this->assertTrue($persistence->remove($persistable));
     }
 
-    /** @test */
-    public function it_can_flush()
+    #[Test]
+    public function it_can_flush(): void
     {
         $this->session->shouldReceive('get')->once();
         $this->cookie->shouldReceive('get')->once();
@@ -239,8 +233,8 @@ class IlluminatePersistenceRepositoryTest extends TestCase
         $this->assertNull($persistence->flush($persistable));
     }
 
-    /** @test */
-    public function it_can_flush_and_forget()
+    #[Test]
+    public function it_can_flush_and_forget(): void
     {
         $this->session->shouldReceive('forget')->once();
         $this->cookie->shouldReceive('forget')->once();

@@ -22,6 +22,7 @@ namespace Cartalyst\Sentinel\Tests\Checkpoints;
 
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Cartalyst\Sentinel\Users\EloquentUser;
 use Cartalyst\Sentinel\Checkpoints\ActivationCheckpoint;
 use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
@@ -37,19 +38,9 @@ class ActivationCheckpointTest extends TestCase
      */
     protected $activations;
 
-    /**
-     * The Eloquent User instance.
-     *
-     * @var EloquentUser
-     */
-    protected $user;
+    protected EloquentUser $user;
 
-    /**
-     * The activation checkpoint.
-     *
-     * @var \Cartalyst\Sentinel\Checkpoint\ActivationCheckpoint
-     */
-    protected $checkpoint;
+    protected ActivationCheckpoint $checkpoint;
 
     /**
      * {@inheritdoc}
@@ -57,24 +48,12 @@ class ActivationCheckpointTest extends TestCase
     protected function setUp(): void
     {
         $this->activations = m::mock(IlluminateActivationRepository::class);
-        $this->user        = m::mock(EloquentUser::class);
+        $this->user        = new EloquentUser;
         $this->checkpoint  = new ActivationCheckpoint($this->activations);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown(): void
-    {
-        $this->activations = null;
-        $this->user        = null;
-        $this->checkpoint  = null;
-
-        m::close();
-    }
-
-    /** @test */
-    public function an_activated_user_can_login()
+    #[Test]
+    public function an_activated_user_can_login(): void
     {
         $this->activations->shouldReceive('completed')->once()->andReturn(true);
 
@@ -83,8 +62,8 @@ class ActivationCheckpointTest extends TestCase
         $this->assertTrue($status);
     }
 
-    /** @test */
-    public function an_exception_will_be_thrown_when_authenticating_a_non_activated_user()
+    #[Test]
+    public function an_exception_will_be_thrown_when_authenticating_a_non_activated_user(): void
     {
         $this->activations->shouldReceive('completed')->once()->andReturn(false);
 
@@ -95,14 +74,14 @@ class ActivationCheckpointTest extends TestCase
         }
     }
 
-    /** @test */
-    public function can_return_true_when_fail_is_called()
+    #[Test]
+    public function can_return_true_when_fail_is_called(): void
     {
         $this->assertTrue($this->checkpoint->fail());
     }
 
-    /** @test */
-    public function an_exception_will_be_thrown_when_the_user_is_not_activated_and_determining_if_the_user_is_logged_in()
+    #[Test]
+    public function an_exception_will_be_thrown_when_the_user_is_not_activated_and_determining_if_the_user_is_logged_in(): void
     {
         $this->expectException(NotActivatedException::class);
 

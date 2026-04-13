@@ -23,20 +23,13 @@ namespace Cartalyst\Sentinel\Tests\Sessions;
 use Mockery as m;
 use Illuminate\Session\Store;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Cartalyst\Sentinel\Sessions\IlluminateSession;
 
 class IlluminateSessionTest extends TestCase
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
-    /** @test */
-    public function it_can_put_a_value_on_session()
+    #[Test]
+    public function it_can_put_a_value_on_session(): void
     {
         $store = m::mock(Store::class);
         $store->shouldReceive('put')->with('foo', 'bar')->once();
@@ -49,8 +42,8 @@ class IlluminateSessionTest extends TestCase
         $this->assertSame('bar', $session->get());
     }
 
-    /** @test */
-    public function it_can_get_a_value_from_session()
+    #[Test]
+    public function it_can_get_a_value_from_session(): void
     {
         $store = m::mock(Store::class);
         $store->shouldReceive('get')->with('foo')->once()->andReturn('bar');
@@ -60,8 +53,8 @@ class IlluminateSessionTest extends TestCase
         $this->assertSame('bar', $session->get());
     }
 
-    /** @test */
-    public function it_can_forget_a_value_from_the_session()
+    #[Test]
+    public function it_can_forget_a_value_from_the_session(): void
     {
         $store = m::mock(Store::class);
         $store->shouldReceive('forget')->with('foo')->once();

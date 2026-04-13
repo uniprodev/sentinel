@@ -22,6 +22,7 @@ namespace Cartalyst\Sentinel\Tests\Hashing;
 
 use RuntimeException;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Cartalyst\Sentinel\Hashing\HasherInterface;
 
 abstract class BaseHashing extends TestCase
@@ -43,41 +44,41 @@ abstract class BaseHashing extends TestCase
         }
     }
 
-    /** @test */
-    public function a_password_can_be_hashed()
+    #[Test]
+    public function a_password_can_be_hashed(): void
     {
         $hashedValue = $this->hasher->hash('password');
 
-        $this->assertTrue($hashedValue !== 'password');
+        $this->assertNotSame('password', $hashedValue);
         $this->assertTrue($this->hasher->check('password', $hashedValue));
         $this->assertFalse($this->hasher->check('fail', $hashedValue));
     }
 
-    /** @test */
-    public function a_password_that_is_not_very_long_in_length_can_be_hashed()
+    #[Test]
+    public function a_password_that_is_not_very_long_in_length_can_be_hashed(): void
     {
         $hashedValue = $this->hasher->hash('foo');
 
-        $this->assertTrue($hashedValue !== 'foo');
+        $this->assertNotSame('foo', $hashedValue);
         $this->assertTrue($this->hasher->check('foo', $hashedValue));
         $this->assertFalse($this->hasher->check('fail', $hashedValue));
     }
 
-    /** @test */
-    public function a_password_with_utf8_characters_can_be_hashed()
+    #[Test]
+    public function a_password_with_utf8_characters_can_be_hashed(): void
     {
         $hashedValue = $this->hasher->hash('fÄÓñ');
 
-        $this->assertTrue($hashedValue !== 'fÄÓñ');
+        $this->assertNotSame('fÄÓñ', $hashedValue);
         $this->assertTrue($this->hasher->check('fÄÓñ', $hashedValue));
     }
 
-    /** @test */
-    public function a_password_with_various_symbols_can_be_hashed()
+    #[Test]
+    public function a_password_with_various_symbols_can_be_hashed(): void
     {
         $hashedValue = $this->hasher->hash('!"#$%^&*()-_,./:;<=>?@[]{}`~|');
 
-        $this->assertTrue($hashedValue !== '!"#$%^&*()-_,./:;<=>?@[]{}`~|');
+        $this->assertNotSame('!"#$%^&*()-_,./:;<=>?@[]{}`~|', $hashedValue);
         $this->assertTrue($this->hasher->check('!"#$%^&*()-_,./:;<=>?@[]{}`~|', $hashedValue));
     }
 }

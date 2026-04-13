@@ -24,6 +24,7 @@ use Mockery as m;
 use PHPUnit\Framework\TestCase;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Query\Builder;
+use PHPUnit\Framework\Attributes\Test;
 use Cartalyst\Sentinel\Users\EloquentUser;
 use Cartalyst\Sentinel\Roles\RoleInterface;
 use Illuminate\Database\Eloquent\Collection;
@@ -35,26 +36,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class EloquentUserTest extends TestCase
 {
-    protected $user;
+    protected EloquentUser $user;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->user = new EloquentUser;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
-    /** @test */
-    public function it_can_get_the_user_permissions_from_the_accessor()
+    #[Test]
+    public function it_can_get_the_user_permissions_from_the_accessor(): void
     {
         $this->user->slug = 'foo';
 
@@ -65,16 +55,16 @@ class EloquentUserTest extends TestCase
         $this->assertSame($permissions, $this->user->permissions);
     }
 
-    /** @test */
-    public function it_can_set_and_get_the_persistable_key()
+    #[Test]
+    public function it_can_set_and_get_the_persistable_key(): void
     {
         $this->user->setPersistableKey('foo_id');
 
         $this->assertSame('foo_id', $this->user->getPersistableKey());
     }
 
-    /** @test */
-    public function it_can_set_and_get_the_persistable_relationship()
+    #[Test]
+    public function it_can_set_and_get_the_persistable_relationship(): void
     {
         $this->user->setPersistableRelationship('foo_persistences');
 
@@ -86,7 +76,7 @@ class EloquentUserTest extends TestCase
      *
      * @runInSeparateProcess
      */
-    public function it_can_set_and_get_the_roles_model()
+    public function it_can_set_and_get_the_roles_model(): void
     {
         $this->user->setRolesModel('RoleMock');
 
@@ -98,7 +88,7 @@ class EloquentUserTest extends TestCase
      *
      * @runInSeparateProcess
      */
-    public function it_can_set_and_get_the_persistences_model()
+    public function it_can_set_and_get_the_persistences_model(): void
     {
         $this->user->setPersistencesModel('PersistenceMock');
 
@@ -110,7 +100,7 @@ class EloquentUserTest extends TestCase
      *
      * @runInSeparateProcess
      */
-    public function it_can_set_and_get_the_activations_model()
+    public function it_can_set_and_get_the_activations_model(): void
     {
         $this->user->setActivationsModel('ActivationMock');
 
@@ -122,7 +112,7 @@ class EloquentUserTest extends TestCase
      *
      * @runInSeparateProcess
      */
-    public function it_can_set_and_get_the_reminders_model()
+    public function it_can_set_and_get_the_reminders_model(): void
     {
         $this->user->setRemindersModel('ReminderMock');
 
@@ -134,15 +124,15 @@ class EloquentUserTest extends TestCase
      *
      * @runInSeparateProcess
      */
-    public function it_can_set_and_get_the_throttling_model()
+    public function it_can_set_and_get_the_throttling_model(): void
     {
         $this->user->setThrottlingModel('ThrottleMock');
 
         $this->assertSame('ThrottleMock', $this->user->getThrottlingModel());
     }
 
-    /** @test */
-    public function it_can_get_the_user_id()
+    #[Test]
+    public function it_can_get_the_user_id(): void
     {
         $this->addMockConnection($this->user);
 
@@ -157,8 +147,8 @@ class EloquentUserTest extends TestCase
         $this->assertSame(1, $this->user->getUserId());
     }
 
-    /** @test */
-    public function it_can_get_the_persistable_id()
+    #[Test]
+    public function it_can_get_the_persistable_id(): void
     {
         $this->addMockConnection($this->user);
 
@@ -173,8 +163,8 @@ class EloquentUserTest extends TestCase
         $this->assertSame('1', $this->user->getPersistableId());
     }
 
-    /** @test */
-    public function it_can_get_the_user_login()
+    #[Test]
+    public function it_can_get_the_user_login(): void
     {
         $this->user->email = 'foo@example.com';
 
@@ -191,74 +181,74 @@ class EloquentUserTest extends TestCase
         $this->assertSame('foo@example.com', $this->user->getUserLogin());
     }
 
-    /** @test */
-    public function it_can_get_the_user_login_names()
+    #[Test]
+    public function it_can_get_the_user_login_names(): void
     {
         $this->assertSame(['email'], $this->user->getLoginNames());
     }
 
-    /** @test */
-    public function it_can_get_the_user_login_name()
+    #[Test]
+    public function it_can_get_the_user_login_name(): void
     {
         $this->assertSame('email', $this->user->getUserLoginName());
     }
 
-    /** @test */
-    public function it_can_get_the_user_password()
+    #[Test]
+    public function it_can_get_the_user_password(): void
     {
         $this->user->password = 'foobar';
 
         $this->assertSame('foobar', $this->user->getUserPassword());
     }
 
-    /** @test */
-    public function it_can_generate_a_persistence_code()
+    #[Test]
+    public function it_can_generate_a_persistence_code(): void
     {
         $this->assertSame(32, strlen($this->user->generatePersistenceCode()));
     }
 
-    /** @test */
-    public function it_can_get_the_roles_relationship()
+    #[Test]
+    public function it_can_get_the_roles_relationship(): void
     {
         $this->addMockConnection($this->user);
 
         $this->assertInstanceOf(BelongsToMany::class, $this->user->roles());
     }
 
-    /** @test */
-    public function it_can_get_the_persistences_relationship()
+    #[Test]
+    public function it_can_get_the_persistences_relationship(): void
     {
         $this->addMockConnection($this->user);
 
         $this->assertInstanceOf(HasMany::class, $this->user->persistences());
     }
 
-    /** @test */
-    public function it_can_get_the_reminders_relationship()
+    #[Test]
+    public function it_can_get_the_reminders_relationship(): void
     {
         $this->addMockConnection($this->user);
 
         $this->assertInstanceOf(HasMany::class, $this->user->reminders());
     }
 
-    /** @test */
-    public function it_can_get_the_activations_relationship()
+    #[Test]
+    public function it_can_get_the_activations_relationship(): void
     {
         $this->addMockConnection($this->user);
 
         $this->assertInstanceOf(HasMany::class, $this->user->activations());
     }
 
-    /** @test */
-    public function it_can_get_the_throttles_relationship()
+    #[Test]
+    public function it_can_get_the_throttles_relationship(): void
     {
         $this->addMockConnection($this->user);
 
         $this->assertInstanceOf(HasMany::class, $this->user->throttle());
     }
 
-    /** @test */
-    public function it_can_check_if_user_is_in_role_using_role_slugs()
+    #[Test]
+    public function it_can_check_if_user_is_in_role_using_role_slugs(): void
     {
         $this->user->id = 0;
 
@@ -283,8 +273,8 @@ class EloquentUserTest extends TestCase
         $this->assertFalse($this->user->inRole('role4'));
     }
 
-    /** @test */
-    public function it_can_check_if_user_is_in_role_using_an_array_of_role_slugs()
+    #[Test]
+    public function it_can_check_if_user_is_in_role_using_an_array_of_role_slugs(): void
     {
         $this->user->id = 0;
 
@@ -308,8 +298,8 @@ class EloquentUserTest extends TestCase
         $this->assertFalse($this->user->inAnyRole(['role5', 'role6']));
     }
 
-    /** @test */
-    public function it_can_check_if_user_is_in_role_using_role_instances()
+    #[Test]
+    public function it_can_check_if_user_is_in_role_using_role_instances(): void
     {
         $this->user->id = 0;
 
@@ -343,8 +333,8 @@ class EloquentUserTest extends TestCase
         $this->assertFalse($this->user->inRole($role4));
     }
 
-    /** @test */
-    public function it_can_check_if_user_is_in_role_using_an_array_of_role_instances()
+    #[Test]
+    public function it_can_check_if_user_is_in_role_using_an_array_of_role_instances(): void
     {
         $this->user->id = 0;
 
@@ -382,8 +372,8 @@ class EloquentUserTest extends TestCase
         $this->assertTrue($this->user->inAnyRole([$foo, $bar]));
     }
 
-    /** @test */
-    public function it_can_get_the_roles_of_a_user()
+    #[Test]
+    public function it_can_get_the_roles_of_a_user(): void
     {
         $this->user->id = 0;
 
@@ -398,8 +388,8 @@ class EloquentUserTest extends TestCase
         $this->assertInstanceOf(Collection::class, $this->user->getRoles());
     }
 
-    /** @test */
-    public function it_can_pass_methods_to_parent()
+    #[Test]
+    public function it_can_pass_methods_to_parent(): void
     {
         $this->addMockConnection($this->user);
         $this->user->getConnection()->getQueryGrammar()->shouldReceive('getDateFormat')->andReturn('Y-m-d H:i:s');
@@ -412,8 +402,8 @@ class EloquentUserTest extends TestCase
         $this->assertTrue($this->user->increment('test'));
     }
 
-    /** @test */
-    public function it_can_pass_methods_to_permissions_instance()
+    #[Test]
+    public function it_can_pass_methods_to_permissions_instance(): void
     {
         $mockRole = m::mock(EloquentRole::class);
         $mockRole->shouldReceive('permissions')->andReturn([]);
@@ -430,8 +420,8 @@ class EloquentUserTest extends TestCase
         $this->assertFalse($this->user->hasAccess('bar'));
     }
 
-    /** @test */
-    public function it_will_ignore_empty_secondary_permissions()
+    #[Test]
+    public function it_will_ignore_empty_secondary_permissions(): void
     {
         $mockRole = m::mock(EloquentRole::class);
         $mockRole->shouldReceive('permissions')->andReturn(null);
@@ -448,8 +438,8 @@ class EloquentUserTest extends TestCase
         $this->assertFalse($this->user->hasAccess('bar'));
     }
 
-    /** @test */
-    public function it_can_delete_a_user()
+    #[Test]
+    public function it_can_delete_a_user(): void
     {
         $user         = m::mock('Cartalyst\Sentinel\Users\EloquentUser[roles,persistences,activations,reminders,throttle]');
         $user->exists = true;
@@ -474,7 +464,7 @@ class EloquentUserTest extends TestCase
         $this->assertTrue($user->delete());
     }
 
-    protected function addMockConnection($model)
+    protected function addMockConnection($model): void
     {
         $resolver = m::mock(ConnectionResolverInterface::class);
         $resolver->shouldReceive('connection')->andReturn($connection = m::mock(Connection::class));

@@ -20,47 +20,29 @@
 
 namespace Cartalyst\Sentinel\Tests\Activations;
 
-use Mockery as m;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Cartalyst\Sentinel\Activations\EloquentActivation;
 
 class EloquentActivationTest extends TestCase
 {
-    /**
-     * The Activation Eloquent instance.
-     *
-     * @var EloquentActivation
-     */
-    protected $activation;
+    protected EloquentActivation $activation;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->activation = new EloquentActivation;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown(): void
-    {
-        $this->activation = null;
-
-        m::close();
-    }
-
-    /** @test */
-    public function it_can_get_the_completed_attribute_as_a_boolean()
+    #[Test]
+    public function it_can_get_the_completed_attribute_as_a_boolean(): void
     {
         $this->activation->completed = 1;
 
         $this->assertTrue($this->activation->completed);
     }
 
-    /** @test */
-    public function it_can_get_the_activation_code_using_the_getter()
+    #[Test]
+    public function it_can_get_the_activation_code_using_the_getter(): void
     {
         $this->activation->code = 'foo';
 

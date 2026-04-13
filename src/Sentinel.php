@@ -41,7 +41,7 @@ class Sentinel
     use EventTrait;
 
     /**
-     * The current cached, logged in user.
+     * The current cached, logged-in user.
      *
      * @var UserInterface
      */
@@ -455,8 +455,6 @@ class Sentinel
 
     /**
      * Sets the callback which creates a basic response.
-     *
-     * @param Closure $basicResonse
      */
     public function creatingBasicResponse(Closure $basicResponse): void
     {
