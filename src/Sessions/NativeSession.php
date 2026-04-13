@@ -22,23 +22,8 @@ namespace Cartalyst\Sentinel\Sessions;
 
 class NativeSession implements SessionInterface
 {
-    /**
-     * The session key.
-     *
-     * @var string
-     */
-    protected $key = 'cartalyst_sentinel';
-
-    /**
-     * Constructor.
-     *
-     *
-     * @return void
-     */
-    public function __construct(?string $key = null)
+    public function __construct(protected ?string $key = 'cartalyst_sentinel')
     {
-        $this->key = $key;
-
         $this->startSession();
     }
 
