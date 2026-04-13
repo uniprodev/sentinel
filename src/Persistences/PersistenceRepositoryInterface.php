@@ -41,9 +41,6 @@ interface PersistenceRepositoryInterface
 
     /**
      * Adds a new user persistence to the current session and attaches the user.
-     *
-     * @param PersistenceInterface $persistable
-     * @return bool|null
      */
     public function persist(PersistableInterface $persistable, bool $remember = false): bool;
 
