@@ -24,15 +24,11 @@ interface PersistableInterface
 {
     /**
      * Returns the persistable key value.
-     *
-     * @return string
      */
     public function getPersistableId(): string;
 
     /**
      * Returns the persistable key name.
-     *
-     * @return string
      */
     public function getPersistableKey(): string;
 
@@ -40,8 +36,6 @@ interface PersistableInterface
 
     /**
      * Returns the persistable relationship name.
-     *
-     * @return string
      */
     public function getPersistableRelationship(): string;
 
@@ -49,8 +43,6 @@ interface PersistableInterface
 
     /**
      * Generates a random persist code.
-     *
-     * @return string
      */
     public function generatePersistenceCode(): string;
 }

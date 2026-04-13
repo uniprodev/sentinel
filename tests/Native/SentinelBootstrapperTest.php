@@ -22,14 +22,15 @@ namespace Cartalyst\Sentinel\Tests\Native;
 
 use PHPUnit\Framework\TestCase;
 use Cartalyst\Sentinel\Sentinel;
+use PHPUnit\Framework\Attributes\Test;
 use Cartalyst\Sentinel\Native\SentinelBootstrapper;
 
 class SentinelBootstrapperTest extends TestCase
 {
-    /** @test */
-    public function it_can_be_instantiated()
+    #[Test]
+    public function it_can_be_instantiated(): void
     {
-        $bootstrapper = new SentinelBootstrapper();
+        $bootstrapper = new SentinelBootstrapper;
 
         $sentinel = $bootstrapper->createSentinel();
 

@@ -22,24 +22,8 @@ namespace Cartalyst\Sentinel\Sessions;
 
 class NativeSession implements SessionInterface
 {
-    /**
-     * The session key.
-     *
-     * @var string
-     */
-    protected $key = 'cartalyst_sentinel';
-
-    /**
-     * Constructor.
-     *
-     * @param string $key
-     *
-     * @return void
-     */
-    public function __construct(string $key = null)
+    public function __construct(protected ?string $key = 'cartalyst_sentinel')
     {
-        $this->key = $key;
-
         $this->startSession();
     }
 
@@ -79,8 +63,6 @@ class NativeSession implements SessionInterface
 
     /**
      * Starts the session if it does not exist.
-     *
-     * @return void
      */
     protected function startSession(): void
     {
@@ -92,8 +74,6 @@ class NativeSession implements SessionInterface
 
     /**
      * Writes the session.
-     *
-     * @return void
      */
     protected function writeSession(): void
     {
@@ -121,8 +101,6 @@ class NativeSession implements SessionInterface
      * The property is serialized initially.
      *
      * @param mixed $value
-     *
-     * @return void
      */
     protected function setSession($value): void
     {
@@ -131,8 +109,6 @@ class NativeSession implements SessionInterface
 
     /**
      * Forgets the Sentinel session from the global $_SESSION.
-     *
-     * @return void
      */
     protected function forgetSession(): void
     {

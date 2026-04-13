@@ -20,24 +20,16 @@
 
 namespace Cartalyst\Sentinel\Tests\Reminders;
 
-use Mockery as m;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Cartalyst\Sentinel\Reminders\EloquentReminder;
 
 class EloquentReminderTest extends TestCase
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown(): void
+    #[Test]
+    public function it_can_get_the_completed_attribute_as_a_boolean(): void
     {
-        m::close();
-    }
-
-    /** @test */
-    public function it_can_get_the_completed_attribute_as_a_boolean()
-    {
-        $reminder = new EloquentReminder();
+        $reminder = new EloquentReminder;
 
         $reminder->completed = 1;
 

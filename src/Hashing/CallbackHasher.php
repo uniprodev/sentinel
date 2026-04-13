@@ -27,22 +27,20 @@ class CallbackHasher implements HasherInterface
     /**
      * The closure used for hashing a value.
      *
-     * @var \Closure
+     * @var Closure
      */
     protected $hash;
 
     /**
      * The closure used for checking a hashed value.
      *
-     * @var \Closure
+     * @var Closure
      */
     protected $check;
 
     /**
      * Constructor.
      *
-     * @param \Closure $hash
-     * @param \Closure $check
      *
      * @return void
      */

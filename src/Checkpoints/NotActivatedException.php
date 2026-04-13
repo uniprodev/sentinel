@@ -28,14 +28,12 @@ class NotActivatedException extends RuntimeException
     /**
      * The user which caused the exception.
      *
-     * @var \Cartalyst\Sentinel\Users\UserInterface
+     * @var UserInterface
      */
     protected $user;
 
     /**
      * Returns the user.
-     *
-     * @return \Cartalyst\Sentinel\Users\UserInterface
      */
     public function getUser(): UserInterface
     {
@@ -45,9 +43,7 @@ class NotActivatedException extends RuntimeException
     /**
      * Sets the user associated with Sentinel (does not log in).
      *
-     * @param  \Cartalyst\Sentinel\Users\UserInterface
-     *
-     * @return void
+     * @param  UserInterface
      */
     public function setUser(UserInterface $user): void
     {

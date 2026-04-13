@@ -46,8 +46,6 @@ class IlluminateActivationRepository implements ActivationRepositoryInterface
     /**
      * Constructor.
      *
-     * @param string $model
-     * @param int    $expires
      *
      * @return void
      */
@@ -81,7 +79,7 @@ class IlluminateActivationRepository implements ActivationRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function get(UserInterface $user, string $code = null): ?ActivationInterface
+    public function get(UserInterface $user, ?string $code = null): ?ActivationInterface
     {
         $expires = $this->expires();
 
@@ -94,16 +92,15 @@ class IlluminateActivationRepository implements ActivationRepositoryInterface
             ->when($code, function ($query, $code) {
                 return $query->where('code', $code);
             })
-            ->first()
-        ;
+            ->first();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function exists(UserInterface $user, string $code = null): bool
+    public function exists(UserInterface $user, ?string $code = null): bool
     {
-        return (bool) $this->get($user, $code);
+        return (bool)$this->get($user, $code);
     }
 
     /**
@@ -120,8 +117,7 @@ class IlluminateActivationRepository implements ActivationRepositoryInterface
             ->where('code', $code)
             ->where('completed', false)
             ->where('created_at', '>', $expires)
-            ->first()
-        ;
+            ->first();
 
         if (! $activation) {
             return false;
@@ -175,8 +171,6 @@ class IlluminateActivationRepository implements ActivationRepositoryInterface
 
     /**
      * Returns the expiration date.
-     *
-     * @return \Carbon\Carbon
      */
     protected function expires(): Carbon
     {
@@ -185,8 +179,6 @@ class IlluminateActivationRepository implements ActivationRepositoryInterface
 
     /**
      * Returns the random string used for the activation code.
-     *
-     * @return string
      */
     protected function generateActivationCode(): string
     {

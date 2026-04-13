@@ -21,37 +21,28 @@
 namespace Cartalyst\Sentinel\Tests\Sessions;
 
 use stdClass;
-use Mockery as m;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Cartalyst\Sentinel\Sessions\NativeSession;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 
 class NativeSessionTest extends TestCase
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
-    /**
-     * @test
-     * @runInSeparateProcess
-     */
-    public function it_can_start_the_session()
+    #[Test]
+    #[RunInSeparateProcess]
+    public function it_can_start_the_session(): void
     {
         $session = new NativeSession('__sentinel');
 
         $this->assertInstanceOf(NativeSession::class, $session);
     }
 
-    /** @test */
-    public function it_can_put_a_value_on_session()
+    #[Test]
+    public function it_can_put_a_value_on_session(): void
     {
         $session = new NativeSession('__sentinel');
 
-        $class      = new stdClass();
+        $class      = new stdClass;
         $class->foo = 'bar';
 
         $session->put($class);
@@ -61,14 +52,14 @@ class NativeSessionTest extends TestCase
         unset($_SESSION['__sentinel']);
     }
 
-    /** @test */
-    public function it_can_get_a_value_from_session()
+    #[Test]
+    public function it_can_get_a_value_from_session(): void
     {
         $session = new NativeSession('__sentinel');
 
         $this->assertNull($session->get());
 
-        $class      = new stdClass();
+        $class      = new stdClass;
         $class->foo = 'bar';
 
         $_SESSION['__sentinel'] = serialize($class);
@@ -78,8 +69,8 @@ class NativeSessionTest extends TestCase
         unset($_SESSION['__sentinel']);
     }
 
-    /** @test */
-    public function it_can_forget_a_value_from_the_session()
+    #[Test]
+    public function it_can_forget_a_value_from_the_session(): void
     {
         $session = new NativeSession('__sentinel');
 

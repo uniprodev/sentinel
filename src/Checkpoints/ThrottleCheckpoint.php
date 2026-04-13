@@ -28,7 +28,7 @@ class ThrottleCheckpoint implements CheckpointInterface
     /**
      * The Throttle repository instance.
      *
-     * @var \Cartalyst\Sentinel\Throttling\ThrottleRepositoryInterface
+     * @var ThrottleRepositoryInterface
      */
     protected $throttle;
 
@@ -42,9 +42,7 @@ class ThrottleCheckpoint implements CheckpointInterface
     /**
      * Constructor.
      *
-     * @param \Cartalyst\Sentinel\Throttling\ThrottleRepositoryInterface $throttle
-     * @param string                                                     $ipAddress
-     *
+     * @param string $ipAddress
      * @return void
      */
     public function __construct(ThrottleRepositoryInterface $throttle, $ipAddress = null)
@@ -75,7 +73,7 @@ class ThrottleCheckpoint implements CheckpointInterface
     /**
      * {@inheritdoc}
      */
-    public function fail(UserInterface $user = null): bool
+    public function fail(?UserInterface $user = null): bool
     {
         // We'll check throttling firstly from any previous attempts. This
         // will throw the required exceptions if the user has already
@@ -91,13 +89,8 @@ class ThrottleCheckpoint implements CheckpointInterface
 
     /**
      * Checks the throttling status of the given user.
-     *
-     * @param string                                       $action
-     * @param \Cartalyst\Sentinel\Users\UserInterface|null $user
-     *
-     * @return bool
      */
-    protected function checkThrottling(string $action, UserInterface $user = null): bool
+    protected function checkThrottling(string $action, ?UserInterface $user = null): bool
     {
         // If we are just checking an existing logged in person, the global delay
         // shouldn't stop them being logged in at all. Only their IP address and
@@ -140,13 +133,8 @@ class ThrottleCheckpoint implements CheckpointInterface
     /**
      * Throws a throttling exception.
      *
-     * @param string $message
-     * @param string $type
-     * @param int    $delay
      *
-     * @throws \Cartalyst\Sentinel\Checkpoints\ThrottlingException
-     *
-     * @return void
+     * @throws ThrottlingException
      */
     protected function throwException(string $message, string $type, int $delay): void
     {

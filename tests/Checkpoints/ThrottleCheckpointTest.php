@@ -23,58 +23,42 @@ namespace Cartalyst\Sentinel\Tests\Checkpoints;
 use Mockery as m;
 use Carbon\Carbon;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Cartalyst\Sentinel\Users\EloquentUser;
 use Cartalyst\Sentinel\Checkpoints\ThrottleCheckpoint;
 use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
+use Cartalyst\Sentinel\Throttling\ThrottleRepositoryInterface;
 use Cartalyst\Sentinel\Throttling\IlluminateThrottleRepository;
 
 class ThrottleCheckpointTest extends TestCase
 {
-    /**
-     * The Checkpoint instance.
-     *
-     * @var \Cartalyst\Sentinel\Checkpoints\ThrottleCheckpoints
-     */
-    protected $checkpoint;
+    protected ThrottleCheckpoint $checkpoint;
 
-    /**
-     * The Eloquent User instance.
-     *
-     * @var \Cartalyst\Sentinel\Users\EloquentUser
-     */
-    protected $user;
+    protected EloquentUser $user;
 
     /**
      * The Users repository instance.
      *
-     * @var \Cartalyst\Sentinel\Throttling\ThrottleRepositoryInterface
+     * @var ThrottleRepositoryInterface
      */
     protected $throttle;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->throttle   = m::mock(IlluminateThrottleRepository::class);
-        $this->user       = m::mock(EloquentUser::class);
+        $this->user       = new EloquentUser;
         $this->checkpoint = new ThrottleCheckpoint($this->throttle, '127.0.0.1');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function tearDown(): void
     {
         $this->throttle   = null;
-        $this->user       = null;
-        $this->checkpoint = null;
 
         m::close();
     }
 
-    /** @test */
-    public function can_login_the_user_without_being_throttled()
+    #[Test]
+    public function can_login_the_user_without_being_throttled(): void
     {
         $this->throttle->shouldReceive('globalDelay')->once()->andReturn(0);
         $this->throttle->shouldReceive('ipDelay')->once();
@@ -85,8 +69,8 @@ class ThrottleCheckpointTest extends TestCase
         $this->assertTrue($status);
     }
 
-    /** @test */
-    public function can_check_if_the_user_is_being_throttled()
+    #[Test]
+    public function can_check_if_the_user_is_being_throttled(): void
     {
         $this->throttle->shouldReceive('ipDelay')->once();
 
@@ -95,8 +79,8 @@ class ThrottleCheckpointTest extends TestCase
         $this->assertTrue($status);
     }
 
-    /** @test */
-    public function can_log_a_throttling_event()
+    #[Test]
+    public function can_log_a_throttling_event(): void
     {
         $this->throttle->shouldReceive('globalDelay')->once();
         $this->throttle->shouldReceive('ipDelay')->once();
@@ -108,8 +92,8 @@ class ThrottleCheckpointTest extends TestCase
         $this->assertTrue(true); // TODO: Add proper assertion later
     }
 
-    /** @test */
-    public function testWithIpAddress()
+    #[Test]
+    public function with_ip_address(): void
     {
         $this->throttle->shouldReceive('globalDelay')->once();
         $this->throttle->shouldReceive('ipDelay')->once();
@@ -121,8 +105,8 @@ class ThrottleCheckpointTest extends TestCase
         $this->assertTrue(true); // TODO: Add proper assertion later
     }
 
-    /** @test */
-    public function testFailedLogin()
+    #[Test]
+    public function failed_login(): void
     {
         $this->expectException(ThrottlingException::class);
         $this->expectExceptionMessage('Too many unsuccessful attempts have been made globally, logins are locked for another [10] second(s).');
@@ -132,8 +116,8 @@ class ThrottleCheckpointTest extends TestCase
         $this->checkpoint->login($this->user);
     }
 
-    /** @test */
-    public function testThrowsExceptionWithIpDelay()
+    #[Test]
+    public function throws_exception_with_ip_delay(): void
     {
         $this->expectException(ThrottlingException::class);
         $this->expectExceptionMessage('Suspicious activity has occured on your IP address and you have been denied access for another [10] second(s).');
@@ -144,8 +128,8 @@ class ThrottleCheckpointTest extends TestCase
         $this->checkpoint->fail($this->user);
     }
 
-    /** @test */
-    public function testThrowsExceptionWithUserDelay()
+    #[Test]
+    public function throws_exception_with_user_delay(): void
     {
         $this->expectException(ThrottlingException::class);
         $this->expectExceptionMessage('Too many unsuccessful login attempts have been made against your account. Please try again after another [10] second(s).');
@@ -157,8 +141,8 @@ class ThrottleCheckpointTest extends TestCase
         $this->checkpoint->fail($this->user);
     }
 
-    /** @test */
-    public function testGetThrottlingExceptionAttributes()
+    #[Test]
+    public function get_throttling_exception_attributes(): void
     {
         $this->throttle->shouldReceive('globalDelay')->once();
         $this->throttle->shouldReceive('ipDelay')->once()->andReturn(0);

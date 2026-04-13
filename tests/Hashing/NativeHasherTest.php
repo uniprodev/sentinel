@@ -29,7 +29,7 @@ class NativeHasherTest extends BaseHashing
      */
     protected function setUp(): void
     {
-        $this->hasher = new NativeHasher();
+        $this->hasher = new NativeHasher;
 
         parent::setUp();
     }

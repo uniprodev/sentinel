@@ -50,8 +50,6 @@ class EloquentPersistence extends Model implements PersistenceInterface
 
     /**
      * Get the Users model FQCN.
-     *
-     * @return string
      */
     public static function getUsersModel(): string
     {
@@ -60,10 +58,6 @@ class EloquentPersistence extends Model implements PersistenceInterface
 
     /**
      * Set the Users model FQCN.
-     *
-     * @param string $usersModel
-     *
-     * @return void
      */
     public static function setUsersModel(string $usersModel): void
     {

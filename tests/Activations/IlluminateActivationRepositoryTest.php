@@ -23,9 +23,11 @@ namespace Cartalyst\Sentinel\Tests\Activations;
 use Mockery as m;
 use Carbon\Carbon;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Database\Eloquent\Builder;
 use Cartalyst\Sentinel\Users\UserInterface;
 use Cartalyst\Sentinel\Activations\EloquentActivation;
+use Cartalyst\Sentinel\Activations\ActivationRepositoryInterface;
 use Cartalyst\Sentinel\Activations\IlluminateActivationRepository;
 
 class IlluminateActivationRepositoryTest extends TestCase
@@ -33,27 +35,24 @@ class IlluminateActivationRepositoryTest extends TestCase
     /**
      * The Activations repository instance.
      *
-     * @var \Cartalyst\Sentinel\Activations\ActivationRepositoryInterface
+     * @var ActivationRepositoryInterface
      */
     protected $activations;
 
     /**
      * The Eloquent Activation instance.
      *
-     * @var \Cartalyst\Sentinel\Activations\EloquentActivation
+     * @var EloquentActivation
      */
     protected $model;
 
     /**
      * The Builder Instance.
      *
-     * @var \Illuminate\Database\Eloquent\Builder;
+     * @var Builder;
      */
     protected $query;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->query = m::mock(Builder::class);
@@ -65,9 +64,6 @@ class IlluminateActivationRepositoryTest extends TestCase
         $this->activations->shouldReceive('createModel')->andReturn($this->model);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function tearDown(): void
     {
         $this->query       = null;
@@ -77,16 +73,16 @@ class IlluminateActivationRepositoryTest extends TestCase
         m::close();
     }
 
-    /** @test */
-    public function it_can_be_instantiated()
+    #[Test]
+    public function it_can_be_instantiated(): void
     {
         $activations = new IlluminateActivationRepository('ActivationModelMock', 259200);
 
         $this->assertSame('ActivationModelMock', $activations->getModel());
     }
 
-    /** @test */
-    public function it_can_create_an_activation_code()
+    #[Test]
+    public function it_can_create_an_activation_code(): void
     {
         $this->model->shouldReceive('fill');
         $this->model->shouldReceive('setAttribute');
@@ -99,8 +95,8 @@ class IlluminateActivationRepositoryTest extends TestCase
         $this->assertInstanceOf(EloquentActivation::class, $activation);
     }
 
-    /** @test */
-    public function it_can_determine_if_an_activation_exists()
+    #[Test]
+    public function it_can_determine_if_an_activation_exists(): void
     {
         $this->query->shouldReceive('where')->with('user_id', '1')->andReturnSelf();
         $this->query->shouldReceive('where')->with('completed', false)->andReturnSelf();
@@ -119,8 +115,8 @@ class IlluminateActivationRepositoryTest extends TestCase
         $this->assertFalse($status);
     }
 
-    /** @test */
-    public function it_can_complete_an_activation()
+    #[Test]
+    public function it_can_complete_an_activation(): void
     {
         $activation = m::mock(EloquentActivation::class);
         $activation->shouldReceive('fill')->once();
@@ -139,8 +135,8 @@ class IlluminateActivationRepositoryTest extends TestCase
         $this->assertTrue($status);
     }
 
-    /** @test */
-    public function it_cannot_complete_an_activation_that_has_expired()
+    #[Test]
+    public function it_cannot_complete_an_activation_that_has_expired(): void
     {
         $this->query->shouldReceive('where')->with('user_id', '1')->andReturnSelf();
         $this->query->shouldReceive('where')->with('code', 'foobar')->andReturnSelf();
@@ -155,8 +151,8 @@ class IlluminateActivationRepositoryTest extends TestCase
         $this->assertFalse($status);
     }
 
-    /** @test */
-    public function it_can_determine_if_an_activation_is_completed()
+    #[Test]
+    public function it_can_determine_if_an_activation_is_completed(): void
     {
         $this->query->shouldReceive('where')->with('user_id', '1')->andReturnSelf();
         $this->query->shouldReceive('where')->with('completed', true)->andReturnSelf();
@@ -169,8 +165,8 @@ class IlluminateActivationRepositoryTest extends TestCase
         $this->assertTrue($status);
     }
 
-    /** @test */
-    public function it_can_determine_if_an_activation_is_not_completed()
+    #[Test]
+    public function it_can_determine_if_an_activation_is_not_completed(): void
     {
         $this->query->shouldReceive('where')->with('user_id', '1')->andReturnSelf();
         $this->query->shouldReceive('where')->with('completed', true)->andReturnSelf();
@@ -183,8 +179,8 @@ class IlluminateActivationRepositoryTest extends TestCase
         $this->assertFalse($status);
     }
 
-    /** @test */
-    public function it_can_remove_non_completed_activations()
+    #[Test]
+    public function it_can_remove_non_completed_activations(): void
     {
         $this->query->shouldReceive('where')->with('user_id', '1')->andReturnSelf();
         $this->query->shouldReceive('where')->with('completed', true)->andReturnSelf();
@@ -197,8 +193,8 @@ class IlluminateActivationRepositoryTest extends TestCase
         $this->assertFalse($status);
     }
 
-    /** @test */
-    public function it_can_remove_completed_activations()
+    #[Test]
+    public function it_can_remove_completed_activations(): void
     {
         $activation = m::mock(EloquentActivation::class);
 
@@ -215,8 +211,8 @@ class IlluminateActivationRepositoryTest extends TestCase
         $this->assertTrue($status);
     }
 
-    /** @test */
-    public function it_can_remove_expired_activations()
+    #[Test]
+    public function it_can_remove_expired_activations(): void
     {
         $this->query->shouldReceive('where')->with('completed', false)->andReturnSelf();
         $this->query->shouldReceive('where')->with('created_at', '<', m::type(Carbon::class))->andReturnSelf();
@@ -228,7 +224,7 @@ class IlluminateActivationRepositoryTest extends TestCase
         $this->assertTrue($status);
     }
 
-    protected function getUserMock()
+    protected function getUserMock(): UserInterface
     {
         $user = m::mock(UserInterface::class);
 

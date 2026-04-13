@@ -21,47 +21,32 @@
 namespace Cartalyst\Sentinel\Tests\Cookies;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Cartalyst\Sentinel\Cookies\NullCookie;
 
 class NullCookieTest extends TestCase
 {
-    /**
-     * The cookie instance.
-     *
-     * @var \Cartalyst\Sentinel\Cookies\NullCookie
-     */
-    protected $cookie;
+    protected NullCookie $cookie;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
-        $this->cookie = new NullCookie();
+        $this->cookie = new NullCookie;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown(): void
-    {
-        $this->cookie = null;
-    }
-
-    /** @test */
-    public function it_can_put_a_cookie()
+    #[Test]
+    public function it_can_put_a_cookie(): void
     {
         $this->assertNull($this->cookie->put('cookie'));
     }
 
-    /** @test */
-    public function it_can_get_a_cookie()
+    #[Test]
+    public function it_can_get_a_cookie(): void
     {
         $this->assertNull($this->cookie->get());
     }
 
-    /** @test */
-    public function it_can_forget_a_cookie()
+    #[Test]
+    public function it_can_forget_a_cookie(): void
     {
         $this->assertNull($this->cookie->forget());
     }

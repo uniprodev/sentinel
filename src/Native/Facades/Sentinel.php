@@ -34,21 +34,20 @@ class Sentinel
     /**
      * The Native Bootstraper instance.
      *
-     * @var \Cartalyst\Sentinel\Native\SentinelBootstrapper
+     * @var SentinelBootstrapper
      */
     protected static $instance;
 
     /**
      * Constructor.
      *
-     * @param \Cartalyst\Sentinel\Native\SentinelBootstrapper $bootstrapper
      *
      * @return void
      */
-    public function __construct(SentinelBootstrapper $bootstrapper = null)
+    public function __construct(?SentinelBootstrapper $bootstrapper = null)
     {
         if ($bootstrapper === null) {
-            $bootstrapper = new SentinelBootstrapper();
+            $bootstrapper = new SentinelBootstrapper;
         }
 
         $this->sentinel = $bootstrapper->createSentinel();
@@ -67,11 +66,10 @@ class Sentinel
     /**
      * Creates a new Native Bootstraper instance.
      *
-     * @param \Cartalyst\Sentinel\Native\SentinelBootstrapper $bootstrapper
      *
-     * @return \Cartalyst\Sentinel\Native\SentinelBootstrapper
+     * @return SentinelBootstrapper
      */
-    public static function instance(SentinelBootstrapper $bootstrapper = null)
+    public static function instance(?SentinelBootstrapper $bootstrapper = null)
     {
         if (static::$instance === null) {
             static::$instance = new static($bootstrapper);
@@ -84,8 +82,7 @@ class Sentinel
      * Handle dynamic, static calls to the object.
      *
      * @param string $method
-     * @param array  $args
-     *
+     * @param array $args
      * @return mixed
      */
     public static function __callStatic($method, $args)

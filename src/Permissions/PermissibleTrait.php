@@ -25,7 +25,7 @@ trait PermissibleTrait
     /**
      * The cached permissions instance for the given user.
      *
-     * @var \Cartalyst\Sentinel\Permissions\PermissionsInterface
+     * @var PermissionsInterface
      */
     protected $permissionsInstance;
 
@@ -38,8 +38,6 @@ trait PermissibleTrait
 
     /**
      * Returns the permissions.
-     *
-     * @return array
      */
     public function getPermissions(): array
     {
@@ -49,7 +47,6 @@ trait PermissibleTrait
     /**
      * Sets permissions.
      *
-     * @param array $permissions
      *
      * @return $this
      */
@@ -62,8 +59,6 @@ trait PermissibleTrait
 
     /**
      * Returns the permissions class name.
-     *
-     * @return string
      */
     public static function getPermissionsClass(): string
     {
@@ -72,10 +67,6 @@ trait PermissibleTrait
 
     /**
      * Sets the permissions class name.
-     *
-     * @param string $permissionsClass
-     *
-     * @return void
      */
     public static function setPermissionsClass(string $permissionsClass): void
     {

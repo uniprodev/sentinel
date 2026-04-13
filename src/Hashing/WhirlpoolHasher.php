@@ -31,7 +31,7 @@ class WhirlpoolHasher implements HasherInterface
     {
         $salt = $this->createSalt();
 
-        return $salt.hash('whirlpool', $salt.$value);
+        return $salt . hash('whirlpool', $salt . $value);
     }
 
     /**
@@ -41,6 +41,6 @@ class WhirlpoolHasher implements HasherInterface
     {
         $salt = substr($hashedValue, 0, $this->saltLength);
 
-        return $this->slowEquals($salt.hash('whirlpool', $salt.$value), $hashedValue);
+        return $this->slowEquals($salt . hash('whirlpool', $salt . $value), $hashedValue);
     }
 }

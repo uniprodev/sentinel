@@ -29,7 +29,7 @@ class BcryptHasherTest extends BaseHashing
      */
     protected function setUp(): void
     {
-        $this->hasher = new BcryptHasher();
+        $this->hasher = new BcryptHasher;
 
         parent::setUp();
     }

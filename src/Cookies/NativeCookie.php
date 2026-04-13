@@ -39,7 +39,6 @@ class NativeCookie implements CookieInterface
      * Constructor.
      *
      * @param array|string $options
-     *
      * @return void
      */
     public function __construct($options = [])
@@ -78,10 +77,6 @@ class NativeCookie implements CookieInterface
     /**
      * Takes a minutes parameter (relative to now)
      * and converts it to a lifetime (unix timestamp).
-     *
-     * @param int $minutes
-     *
-     * @return int
      */
     protected function minutesToLifetime(int $minutes): int
     {
@@ -107,16 +102,10 @@ class NativeCookie implements CookieInterface
     /**
      * Sets a PHP cookie.
      *
-     * @param mixed  $value
-     * @param int    $lifetime
-     * @param string $path
-     * @param string $domain
-     * @param bool   $secure
-     * @param bool   $httpOnly
-     *
+     * @param mixed $value
      * @return void
      */
-    protected function setCookie($value, int $lifetime, string $path = null, string $domain = null, bool $secure = null, bool $httpOnly = null)
+    protected function setCookie($value, int $lifetime, ?string $path = null, ?string $domain = null, ?bool $secure = null, ?bool $httpOnly = null)
     {
         setcookie(
             $this->options['name'],

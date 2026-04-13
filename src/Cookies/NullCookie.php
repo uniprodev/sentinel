@@ -26,12 +26,8 @@ class NullCookie implements CookieInterface
      * Put a value in the Sentinel cookie (to be stored until it's cleared).
      *
      * @param mixed $value
-     *
-     * @return void
      */
-    public function put($value): void
-    {
-    }
+    public function put($value): void {}
 
     /**
      * Returns the Sentinel cookie value.
@@ -45,10 +41,6 @@ class NullCookie implements CookieInterface
 
     /**
      * Remove the Sentinel cookie.
-     *
-     * @return void
      */
-    public function forget(): void
-    {
-    }
+    public function forget(): void {}
 }

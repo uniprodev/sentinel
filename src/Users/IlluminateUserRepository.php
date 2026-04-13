@@ -35,7 +35,7 @@ class IlluminateUserRepository implements UserRepositoryInterface
     /**
      * The Hasher instance.
      *
-     * @var \Cartalyst\Sentinel\Hashing\HasherInterface
+     * @var HasherInterface
      */
     protected $hasher;
 
@@ -49,13 +49,10 @@ class IlluminateUserRepository implements UserRepositoryInterface
     /**
      * Constructor.
      *
-     * @param \Cartalyst\Sentinel\Hashing\HasherInterface $hasher
-     * @param \Illuminate\Contracts\Events\Dispatcher     $dispatcher
-     * @param string|null                                 $model
      *
      * @return void
      */
-    public function __construct(HasherInterface $hasher, Dispatcher $dispatcher = null, string $model = null)
+    public function __construct(HasherInterface $hasher, ?Dispatcher $dispatcher = null, ?string $model = null)
     {
         $this->hasher = $hasher;
 
@@ -120,8 +117,7 @@ class IlluminateUserRepository implements UserRepositoryInterface
             ->whereHas('persistences', function ($q) use ($code) {
                 $q->where('code', $code);
             })
-            ->first()
-        ;
+            ->first();
     }
 
     /**
@@ -131,7 +127,7 @@ class IlluminateUserRepository implements UserRepositoryInterface
     {
         $user->last_login = Carbon::now();
 
-        return (bool) $user->save();
+        return (bool)$user->save();
     }
 
     /**
@@ -139,7 +135,7 @@ class IlluminateUserRepository implements UserRepositoryInterface
      */
     public function recordLogout(UserInterface $user): bool
     {
-        return (bool) $user->save();
+        return (bool)$user->save();
     }
 
     /**
@@ -173,7 +169,7 @@ class IlluminateUserRepository implements UserRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function create(array $credentials, Closure $callback = null): ?UserInterface
+    public function create(array $credentials, ?Closure $callback = null): ?UserInterface
     {
         $user = $this->createModel();
 
@@ -218,11 +214,6 @@ class IlluminateUserRepository implements UserRepositoryInterface
 
     /**
      * Fills a user with the given credentials, intelligently.
-     *
-     * @param \Cartalyst\Sentinel\Users\UserInterface $user
-     * @param array                                   $credentials
-     *
-     * @return void
      */
     public function fill(UserInterface $user, array $credentials): void
     {
@@ -257,8 +248,6 @@ class IlluminateUserRepository implements UserRepositoryInterface
 
     /**
      * Returns the hasher instance.
-     *
-     * @return \Cartalyst\Sentinel\Hashing\HasherInterface
      */
     public function getHasher(): HasherInterface
     {
@@ -267,10 +256,6 @@ class IlluminateUserRepository implements UserRepositoryInterface
 
     /**
      * Sets the hasher instance.
-     *
-     * @param \Cartalyst\Sentinel\Hashing\HasherInterface $hasher
-     *
-     * @return void
      */
     public function setHasher(HasherInterface $hasher): void
     {
@@ -280,12 +265,8 @@ class IlluminateUserRepository implements UserRepositoryInterface
     /**
      * Parses the given credentials to return logins, password and others.
      *
-     * @param array $credentials
-     * @param array $loginNames
      *
-     * @throws \InvalidArgumentException
-     *
-     * @return array
+     * @throws InvalidArgumentException
      */
     protected function parseCredentials(array $credentials, array $loginNames): array
     {
@@ -319,14 +300,10 @@ class IlluminateUserRepository implements UserRepositoryInterface
     /**
      * Validates the user.
      *
-     * @param array $credentials
-     * @param int   $id
      *
-     * @throws \InvalidArgumentException
-     *
-     * @return bool
+     * @throws InvalidArgumentException
      */
-    protected function validateUser(array $credentials, int $id = null): bool
+    protected function validateUser(array $credentials, ?int $id = null): bool
     {
         $instance = $this->createModel();
 

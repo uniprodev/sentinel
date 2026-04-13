@@ -31,8 +31,6 @@ trait Hasher
 
     /**
      * Create a random string for a salt.
-     *
-     * @return string
      */
     protected function createSalt(): string
     {
@@ -51,11 +49,6 @@ trait Hasher
 
     /**
      * Compares two strings $a and $b in length-constant time.
-     *
-     * @param string $a
-     * @param string $b
-     *
-     * @return bool
      */
     protected function slowEquals(string $a, string $b): bool
     {

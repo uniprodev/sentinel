@@ -22,6 +22,7 @@ namespace Cartalyst\Sentinel\Tests\Roles;
 
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Database\Eloquent\Builder;
 use Cartalyst\Sentinel\Roles\EloquentRole;
 
@@ -44,16 +45,13 @@ class IlluminateRoleRepositoryTest extends TestCase
         $this->roles->shouldReceive('createModel')->andReturn($this->model);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function tearDown(): void
     {
         m::close();
     }
 
-    /** @test */
-    public function it_can_be_instantiated()
+    #[Test]
+    public function it_can_be_instantiated(): void
     {
         $roles = m::mock('Cartalyst\Sentinel\Roles\IlluminateRoleRepository[createModel]', [
             EloquentRole::class,
@@ -62,8 +60,8 @@ class IlluminateRoleRepositoryTest extends TestCase
         $this->assertSame(EloquentRole::class, $roles->getModel());
     }
 
-    /** @test */
-    public function it_can_find_a_role_using_its_id()
+    #[Test]
+    public function it_can_find_a_role_using_its_id(): void
     {
         $this->model->shouldReceive('newQuery')->andReturn($this->query);
 
@@ -74,8 +72,8 @@ class IlluminateRoleRepositoryTest extends TestCase
         $this->assertInstanceOf(EloquentRole::class, $role);
     }
 
-    /** @test */
-    public function it_can_find_a_role_using_its_slug()
+    #[Test]
+    public function it_can_find_a_role_using_its_slug(): void
     {
         $this->model->shouldReceive('newQuery')->andReturn($this->query);
 
@@ -85,8 +83,8 @@ class IlluminateRoleRepositoryTest extends TestCase
         $this->assertInstanceOf(EloquentRole::class, $this->roles->findBySlug('foo'));
     }
 
-    /** @test */
-    public function it_can_find_a_role_using_its_name()
+    #[Test]
+    public function it_can_find_a_role_using_its_name(): void
     {
         $this->model->shouldReceive('newQuery')->andReturn($this->query);
 

@@ -20,6 +20,7 @@
 
 namespace Cartalyst\Sentinel\Reminders;
 
+use Illuminate\Database\Eloquent\Model;
 use Cartalyst\Sentinel\Users\UserInterface;
 
 interface ReminderRepositoryInterface
@@ -27,47 +28,31 @@ interface ReminderRepositoryInterface
     /**
      * Create a new reminder record and code.
      *
-     * @param \Cartalyst\Sentinel\Users\UserInterface $user
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     public function create(UserInterface $user);
 
     /**
      * Gets the reminder for the given user.
      *
-     * @param \Cartalyst\Sentinel\Users\UserInterface $user
-     * @param string|null                             $code
      *
-     * @return \Illuminate\Database\Eloquent\Model|null
+     * @return Model|null
      */
-    public function get(UserInterface $user, string $code = null);
+    public function get(UserInterface $user, ?string $code = null);
 
     /**
      * Check if a valid reminder exists.
-     *
-     * @param \Cartalyst\Sentinel\Users\UserInterface $user
-     * @param string|null                             $code
-     *
-     * @return bool
      */
-    public function exists(UserInterface $user, string $code = null): bool;
+    public function exists(UserInterface $user, ?string $code = null): bool;
 
     /**
      * Complete reminder for the given user.
-     *
-     * @param \Cartalyst\Sentinel\Users\UserInterface $user
-     * @param string                                  $code
-     * @param string                                  $password
-     *
-     * @return bool
      */
     public function complete(UserInterface $user, string $code, string $password): bool;
 
     /**
      * Remove expired reminder codes.
-     *
-     * @return bool
      */
     public function removeExpired(): bool;
 }

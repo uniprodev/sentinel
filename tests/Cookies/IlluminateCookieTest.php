@@ -24,23 +24,21 @@ use Mockery as m;
 use Illuminate\Http\Request;
 use PHPUnit\Framework\TestCase;
 use Illuminate\Cookie\CookieJar;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\HttpFoundation\Cookie;
 use Cartalyst\Sentinel\Cookies\IlluminateCookie;
 
 class IlluminateCookieTest extends TestCase
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function tearDown(): void
     {
         m::close();
     }
 
-    /** @test */
-    public function it_can_put_a_cookie()
+    #[Test]
+    public function it_can_put_a_cookie(): void
     {
-        $jar = new CookieJar();
+        $jar = new CookieJar;
 
         $request = m::mock(Request::class);
         $request->shouldReceive('cookie')->with('foo')->once()->andReturn('bar');
@@ -52,8 +50,8 @@ class IlluminateCookieTest extends TestCase
         $this->assertSame('bar', $illuminateCookie->get());
     }
 
-    /** @test */
-    public function it_can_get_a_cookie()
+    #[Test]
+    public function it_can_get_a_cookie(): void
     {
         $jar = m::mock(CookieJar::class);
         $jar->shouldReceive('getQueuedCookies')->once()->andReturn([]);
@@ -66,8 +64,8 @@ class IlluminateCookieTest extends TestCase
         $this->assertSame('bar', $illuminateCookie->get());
     }
 
-    /** @test */
-    public function it_can_get_a_queued_cookie()
+    #[Test]
+    public function it_can_get_a_queued_cookie(): void
     {
         $cookie = m::mock(Cookie::class);
         $cookie->shouldReceive('getValue')->andReturn('bar');
@@ -82,10 +80,10 @@ class IlluminateCookieTest extends TestCase
         $this->assertSame('bar', $illuminateCookie->get());
     }
 
-    /** @test */
-    public function it_can_forget_a_cookie()
+    #[Test]
+    public function it_can_forget_a_cookie(): void
     {
-        $jar = new CookieJar();
+        $jar = new CookieJar;
 
         $request = m::mock(Request::class);
         $request->shouldReceive('cookie')->with('foo')->once()->andReturn(null);

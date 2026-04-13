@@ -35,7 +35,6 @@ interface ThrottleRepositoryInterface
      * Returns the IP address throttling delay, in seconds.
      *
      * @param string $ipAddress
-     *
      * @return int
      */
     public function ipDelay($ipAddress);
@@ -43,7 +42,6 @@ interface ThrottleRepositoryInterface
     /**
      * Returns the throttling delay for the given user, in seconds.
      *
-     * @param \Cartalyst\Sentinel\Users\UserInterface $user
      *
      * @return int
      */
@@ -52,10 +50,8 @@ interface ThrottleRepositoryInterface
     /**
      * Logs a new throttling entry.
      *
-     * @param string                                  $ipAddress
-     * @param \Cartalyst\Sentinel\Users\UserInterface $user
-     *
+     * @param string $ipAddress
      * @return void
      */
-    public function log($ipAddress = null, UserInterface $user = null);
+    public function log($ipAddress = null, ?UserInterface $user = null);
 }

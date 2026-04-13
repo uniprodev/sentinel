@@ -30,14 +30,13 @@ class ActivationCheckpoint implements CheckpointInterface
     /**
      * The Activations repository instance.
      *
-     * @var \Cartalyst\Sentinel\Activations\ActivationRepositoryInterface
+     * @var ActivationRepositoryInterface
      */
     protected $activations;
 
     /**
      * Constructor.
      *
-     * @param \Cartalyst\Sentinel\Activations\ActivationRepositoryInterface $activations
      *
      * @return void
      */
@@ -65,11 +64,8 @@ class ActivationCheckpoint implements CheckpointInterface
     /**
      * Checks the activation status of the given user.
      *
-     * @param \Cartalyst\Sentinel\Users\UserInterface $user
      *
-     * @throws \Cartalyst\Sentinel\Checkpoints\NotActivatedException
-     *
-     * @return bool
+     * @throws NotActivatedException
      */
     protected function checkActivation(UserInterface $user): bool
     {
