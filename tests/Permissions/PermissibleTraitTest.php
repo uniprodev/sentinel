@@ -45,7 +45,7 @@ class PermissibleTraitTest extends TestCase
     }
 
     #[Test]
-    public function it_can_get_the_permissions_intance(): void
+    public function it_can_get_the_permissions_instance(): void
     {
         $this->permissible::setPermissionsClass(StandardPermissions::class);
 
